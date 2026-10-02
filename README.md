@@ -1,2 +1,1 @@
-# Edo-web
-Website untuk bagi bagi addon 
+# Edo website 
