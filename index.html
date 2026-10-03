@@ -943,4 +943,394 @@ const files = [
         name:"Waypoints Add-On",
         type:"MCADDON",
         category:"addon",
-        url:"https://www.mediafire.com/file/gia15z4gn91x6xb/Waypoints_Add
+        url:"https://www.mediafire.com/file/gia15z4gn91x6xb/Waypoints_Add-On_%2528addon%2529.mcaddon/file"
+    },
+
+    {
+        name:"ReplayDirector RepeatPlayFix",
+        type:"MCADDON",
+        category:"addon",
+        url:"https://www.mediafire.com/file/hhrtu4d75u8aqcz/ReplayDirector_RepeatPlayFix.mcaddon/file"
+    },
+
+    {
+        name:"Monster School Map",
+        type:"MCWORLD",
+        category:"map",
+        url:"https://www.mediafire.com/file/xud4m62mh8nzple/MP+Monster+School+Map+Update.mcworld/file"
+    },
+
+    {
+        name:"Complementary Unbound Clouds",
+        type:"MCPACK",
+        category:"texture",
+        url:"https://www.mediafire.com/file/wcqdzjp1khoouz5/MP+Complementary_Unbound_Clouds.mcpack/file"
+    },
+
+    {
+        name:"SpongeBob SquarePants",
+        type:"MCADDON",
+        category:"addon",
+        url:"https://www.mediafire.com/file/2jefkeb2l7f7crh/Spongebob_squarepants_by_kingRams.mcaddon/file"
+    },
+
+    {
+        name:"Xentium Utilities v1.4.5",
+        type:"MCADDON",
+        category:"addon",
+        url:"https://www.mediafire.com/file/vfd3ssid5tpqnx9/Xentium+Utilities+v1.4.5.mcaddon/file"
+    },
+
+    {
+        name:"Lazy Legend Hitbox (Red)",
+        type:"MCPACK",
+        category:"texture",
+        url:"https://www.mediafire.com/file/hnmw9c74b5ivecb/MP+Lazy_Legend+Hitbox+(Red).mcpack/file"
+    },
+
+    {
+        name:"Better BossBars v1.5",
+        type:"MCPACK",
+        category:"texture",
+        url:"https://www.mediafire.com/file/w104p2v0wc74n1x/MP+Better+BossBars+v1.5.mcpack/file"
+    },
+
+    {
+        name:"EdeyaWings",
+        type:"MCADDON",
+        category:"addon",
+        url:"https://www.mediafire.com/file/6clyz5zvktt2xxn/MP+EdeyaWings.mcaddon/file"
+    },
+
+    {
+        name:"BareBones Recolors",
+        type:"MCPACK",
+        category:"texture",
+        url:"https://www.mediafire.com/file/nmksevt0zctcbcw/BareBones+Recolors.mcpack/file"
+    },
+
+    {
+        name:"Tree Capitator v1",
+        type:"MCADDON",
+        category:"addon",
+        url:"https://www.mediafire.com/file/phimz0ego7km4nq/%E2%9C%A6+Tree+Capitator+%E2%9F%A6v1%E2%9F%A7+%2B+%E2%96%B8%E2%9F%A6ACHIEVEMENT+FRIENDLY%E2%9F%A7.mcaddon/file"
+    },
+
+    {
+        name:"Instant Structures v7",
+        type:"MCADDON",
+        category:"addon",
+        url:"https://www.curseforge.com/minecraft-bedrock/addons/instant-structures-add-on/files"
+    },
+
+    {
+        name:"No Creepers (Removal)",
+        type:"SCRIPT",
+        category:"script",
+        url:"https://www.curseforge.com/minecraft-bedrock/scripts/no-creepers-creeper-removal/files"
+    },
+
+    {
+        name:"Item Physics +",
+        type:"MCADDON",
+        category:"addon",
+        url:"https://www.curseforge.com/minecraft-bedrock/addons/item-physics/files"
+    },
+
+    {
+        name:"Angels & Demons Add-On",
+        type:"MCADDON",
+        category:"addon",
+        url:"https://www.mediafire.com/file/s1rizphvz69bihj/Angels_%26_Demons_Add-On.mcaddon/file"
+    }
+
+];
+
+/* =========================================
+   ICON FALLBACK
+========================================= */
+
+function getEmoji(category){
+
+    if(category === "addon") return "🧩";
+    if(category === "map") return "🗺️";
+    if(category === "texture") return "🎨";
+    if(category === "apk") return "📱";
+    if(category === "script") return "📜";
+
+    return "📦";
+}
+
+/* =========================================
+   CATEGORY NAME
+========================================= */
+
+function getCategoryName(category){
+
+    if(category === "addon") return "Add-on";
+    if(category === "map") return "Map";
+    if(category === "texture") return "Texture Pack";
+    if(category === "apk") return "APK & Client";
+    if(category === "script") return "Script";
+
+    return "File";
+}
+
+/* =========================================
+   OPEN MENU
+========================================= */
+
+function openMenu(){
+
+    document.getElementById("sideMenu").classList.add("active");
+    document.getElementById("overlay").classList.add("active");
+
+}
+
+function closeMenu(){
+
+    document.getElementById("sideMenu").classList.remove("active");
+    document.getElementById("overlay").classList.remove("active");
+
+}
+
+/* =========================================
+   RENDER FILES
+========================================= */
+
+function renderFiles(list, title){
+
+    const content = document.getElementById("content");
+
+    if(list.length === 0){
+
+        content.innerHTML = `
+            <div class="empty">
+                <div style="font-size:40px;margin-bottom:10px;">🔍</div>
+                <h3>File tidak ditemukan</h3>
+                <p style="margin-top:7px;">
+                    Coba gunakan kata pencarian yang lain.
+                </p>
+            </div>
+        `;
+
+        return;
+    }
+
+    let html = `
+
+        <div class="section-head">
+
+            <h2>${title}</h2>
+
+            <span class="file-count">
+                ${list.length} file
+            </span>
+
+        </div>
+
+        <div class="file-grid">
+    `;
+
+    list.forEach(file => {
+
+        let icon = file.icon
+            ? `<img src="${file.icon}" alt="" onerror="this.parentElement.innerHTML='${getEmoji(file.category)}'">`
+            : getEmoji(file.category);
+
+        html += `
+
+            <div class="card">
+
+                <div class="card-top">
+
+                    <div class="file-icon">
+                        ${icon}
+                    </div>
+
+                    <div class="file-info">
+
+                        <div class="file-name">
+                            ${escapeHTML(file.name)}
+                        </div>
+
+                        <span class="file-type">
+                            ${escapeHTML(file.type)}
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="card-category">
+                    ${getCategoryName(file.category)}
+                </div>
+
+                <a
+                    class="download-btn"
+                    href="${file.url}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    ⬇️ Download
+                </a>
+
+            </div>
+
+        `;
+
+    });
+
+    html += `</div>`;
+
+    content.innerHTML = html;
+}
+
+/* =========================================
+   SHOW CATEGORY
+========================================= */
+
+function showCategory(category){
+
+    document.getElementById("searchInput").value = "";
+
+    document.querySelectorAll(".category-btn").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    const activeButton = document.getElementById("cat-" + category);
+
+    if(activeButton){
+        activeButton.classList.add("active");
+    }
+
+    if(category === "home"){
+
+        const latest = files
+            .slice()
+            .reverse()
+            .slice(0, 5);
+
+        renderFiles(latest, "🔥 File Terbaru");
+
+        return;
+    }
+
+    const filtered = files.filter(file => {
+        return file.category === category;
+    });
+
+    renderFiles(
+        filtered,
+        getCategoryName(category)
+    );
+}
+
+/* =========================================
+   SEARCH
+========================================= */
+
+function searchFiles(){
+
+    const query = document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+    if(!query){
+
+        showCategory("home");
+        return;
+    }
+
+    document.querySelectorAll(".category-btn").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    const result = files.filter(file => {
+
+        return (
+            file.name.toLowerCase().includes(query) ||
+            file.type.toLowerCase().includes(query) ||
+            getCategoryName(file.category).toLowerCase().includes(query)
+        );
+
+    });
+
+    renderFiles(
+        result,
+        "🔎 Hasil Pencarian"
+    );
+}
+
+/* =========================================
+   REPORT
+========================================= */
+
+function showReport(){
+
+    document.querySelectorAll(".category-btn").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    const reportButton = document.getElementById("cat-report");
+
+    if(reportButton){
+        reportButton.classList.add("active");
+    }
+
+    document.getElementById("content").innerHTML = `
+
+        <div class="report">
+
+            <h2>⚠️ Laporan File</h2>
+
+            <p>
+                Menemukan link mati, file bermasalah, atau informasi
+                yang salah? Kamu bisa mengirim laporan ke admin EDO Web.
+            </p>
+
+            <a
+                class="report-btn"
+                href="https://wa.me/628XXXXXXXXXX?text=Halo%20EDO%20Web%2C%20saya%20ingin%20melaporkan%20file."
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                💬 Kirim Laporan
+            </a>
+
+        </div>
+
+    `;
+}
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHTML(text){
+
+    return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+/* =========================================
+   START DIRECTLY ON HOME
+========================================= */
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    showCategory("home");
+
+});
+
+</script>
+
+</body>
+</html>
