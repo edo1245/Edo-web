@@ -3,25 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#07080f">
+<meta name="theme-color" content="#0c0814">
 
 <title>EDO Web (Beta)</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
+/* =====================================================
+   TOKEN
+   Obsidian  #0c0814   latar
+   Void      #130d20   permukaan kartu
+   Edge      #2a1f40   garis tipis
+   Portal    #a855f7   warna utama (portal Nether)
+   Mist      #ede9fe   teks
+   Dusk      #9b8fb8   teks redup
+===================================================== */
+
 :root{
-    --bg:#07080f;
-    --text:#eef0ff;
-    --muted:#8f94b8;
-    --glass:rgba(255,255,255,.045);
-    --line:rgba(255,255,255,.09);
-    --violet:#7c5cff;
-    --cyan:#22d3ee;
-    --grad:linear-gradient(135deg,#7c5cff,#22d3ee);
+    --bg:#0c0814;
+    --surface:#130d20;
+    --surface-2:#1a1230;
+    --line:#2a1f40;
+    --text:#ede9fe;
+    --muted:#9b8fb8;
+    --portal:#a855f7;
+    --cta-a:#7c3aed;
+    --cta-b:#9333ea;
     --ease:cubic-bezier(.2,.7,.2,1);
+    --display:'Chakra Petch','Trebuchet MS',sans-serif;
 }
 
 *{
@@ -30,867 +42,775 @@
     padding:0;
 }
 
-[hidden]{ display:none !important; }
-
-html{ -webkit-text-size-adjust:100%; }
+html{
+    -webkit-text-size-adjust:100%;
+}
 
 body{
-    font-family:'Sora',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
-    background:var(--bg);
-    color:var(--text);
     min-height:100vh;
-    line-height:1.4;
+    background:var(--bg);
+    background-image:radial-gradient(1000px 420px at 50% -160px,rgba(124,58,237,.24),transparent 70%);
+    background-repeat:no-repeat;
+    color:var(--text);
+    font-family:'Inter',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+    line-height:1.45;
+    -webkit-font-smoothing:antialiased;
 }
 
-body.locked{
-    overflow:hidden;
-    height:100vh;
+button,input,textarea{
+    font:inherit;
+    color:inherit;
 }
 
-button,input,textarea{ font-family:inherit; }
+button{
+    cursor:pointer;
+}
 
 :focus-visible{
-    outline:2px solid var(--cyan);
-    outline-offset:3px;
+    outline:2px solid #c4b5fd;
+    outline-offset:2px;
 }
 
-/* =========================
-   LATAR AURORA
-========================= */
+/* warna per kategori */
+.cat-addon  { --accent:#a78bfa; --rgb:167,139,250; }
+.cat-map    { --accent:#34d399; --rgb:52,211,153; }
+.cat-texture{ --accent:#fbbf24; --rgb:251,191,36; }
+.cat-apk    { --accent:#22d3ee; --rgb:34,211,238; }
+.cat-script { --accent:#fb7185; --rgb:251,113,133; }
+.cat-report { --accent:#94a3b8; --rgb:148,163,184; }
 
-.aurora{
-    position:fixed;
-    inset:0;
-    z-index:0;
-    overflow:hidden;
-    pointer-events:none;
+.beta{
+    display:inline-block;
+    padding:2px 9px;
+    border-radius:999px;
+    background:rgba(168,85,247,.16);
+    color:#d8b4fe;
+    font-family:'Inter',sans-serif;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.04em;
+    vertical-align:middle;
 }
 
-.aurora i{
-    position:absolute;
-    border-radius:50%;
-    background:radial-gradient(circle,var(--c) 0%,transparent 62%);
-    animation:drift 24s ease-in-out infinite alternate;
-}
-
-.aurora i:nth-child(1){
-    --c:rgba(124,92,255,.5);
-    width:80vmax; height:80vmax;
-    top:-42vmax; left:-30vmax;
-}
-
-.aurora i:nth-child(2){
-    --c:rgba(34,211,238,.3);
-    width:75vmax; height:75vmax;
-    bottom:-45vmax; right:-35vmax;
-    animation-duration:30s;
-    animation-delay:-9s;
-}
-
-.aurora i:nth-child(3){
-    --c:rgba(251,113,133,.18);
-    width:50vmax; height:50vmax;
-    top:35%; left:45%;
-    animation-duration:36s;
-    animation-delay:-16s;
-}
-
-.aurora::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background-image:
-        linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
-    background-size:48px 48px;
-    -webkit-mask-image:radial-gradient(ellipse at 50% 0%,#000 0%,transparent 72%);
-            mask-image:radial-gradient(ellipse at 50% 0%,#000 0%,transparent 72%);
-}
-
-@keyframes drift{
-    to{ transform:translate(12vmax,8vmax) scale(1.15); }
-}
-
-@keyframes float{
-    0%,100%{ transform:translateY(0); }
-    50%{ transform:translateY(-12px); }
-}
-
-@keyframes floatHero{
-    0%,100%{ transform:translateY(-50%) rotate(-8deg); }
-    50%{ transform:translateY(calc(-50% - 14px)) rotate(-3deg); }
-}
-
-@keyframes rise{
-    from{ opacity:0; transform:translateY(22px); }
-    to{ opacity:1; transform:none; }
-}
-
-/* =========================
-   INTRO
-========================= */
+/* =====================================================
+   WELCOME  -  portal Nether
+===================================================== */
 
 #welcome{
     position:fixed;
     inset:0;
-    z-index:100;
+    z-index:9999;
     display:grid;
     place-items:center;
+    overflow:hidden;
+    padding:20px;
     text-align:center;
-    padding:24px;
-    background:
-        radial-gradient(120% 90% at 50% 0%,#1d1650 0%,#0b0b1d 48%,#06070d 100%);
-    clip-path:circle(150% at var(--x,50%) var(--y,60%));
-    transition:clip-path .95s cubic-bezier(.75,0,.2,1);
+    background:radial-gradient(ellipse at 50% 38%,#1d1136 0%,#0c0814 66%);
+    transition:opacity .55s ease;
 }
 
-#welcome.wipe{
-    clip-path:circle(0% at var(--x) var(--y));
+#welcome.leaving{
+    opacity:0;
+    pointer-events:none;
 }
 
-#welcome::before{
-    content:"";
+.welcome-stage{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:34px;
+}
+
+.portal-wrap{
+    position:relative;
+    width:150px;
+    height:210px;
+    transform-origin:50% 50%;
+    will-change:transform;
+}
+
+.portal-frame{
     position:absolute;
-    width:min(120vw,720px);
-    height:min(120vw,720px);
-    border-radius:50%;
-    background:radial-gradient(circle,rgba(124,92,255,.35),transparent 65%);
-    animation:pulse 5s ease-in-out infinite;
+    inset:0;
+    padding:14px;
+    background:repeating-conic-gradient(#1d1131 0 25%,#130a24 0 50%) 0 0/28px 28px;
+    box-shadow:
+        0 0 0 3px #0a0612,
+        0 0 46px 6px rgba(168,85,247,.45),
+        0 0 120px 30px rgba(124,58,237,.22);
+    animation:breathe 3.4s ease-in-out infinite;
 }
 
-@keyframes pulse{
-    0%,100%{ transform:scale(.9); opacity:.7; }
-    50%{ transform:scale(1.08); opacity:1; }
-}
-
-.w-inner{
+.portal-core{
     position:relative;
     width:100%;
-    max-width:440px;
-}
-
-.w-cube{
-    width:116px;
-    height:116px;
-    margin:0 auto 22px;
-    filter:drop-shadow(0 18px 38px rgba(124,92,255,.6));
-    animation:cubeIn 1s var(--ease) both, float 4.2s ease-in-out 1s infinite;
-}
-
-.w-cube svg{ width:100%; height:100%; display:block; }
-
-@keyframes cubeIn{
-    from{ opacity:0; transform:translateY(30px) scale(.6) rotate(-25deg); }
-    to{ opacity:1; transform:none; }
-}
-
-#welcome.go .w-cube{
-    animation:cubeGo .75s cubic-bezier(.6,0,.3,1) forwards;
-}
-
-@keyframes cubeGo{
-    0%{ transform:rotate(0) scale(1); }
-    60%{ transform:rotate(300deg) scale(1.22); }
-    100%{ transform:rotate(360deg) scale(1.05); }
-}
-
-.w-title{
-    display:flex;
-    justify-content:center;
-    font-size:clamp(42px,13vw,66px);
-    font-weight:800;
-    letter-spacing:-.035em;
-    line-height:1;
-}
-
-.w-title .ch{
-    display:inline-block;
-    opacity:0;
-    transform:translateY(45%) rotate(5deg);
-    animation:chIn .75s var(--ease) forwards;
-    animation-delay:calc(.35s + var(--i) * .06s);
-}
-
-@keyframes chIn{
-    to{ opacity:1; transform:none; }
-}
-
-.w-badge{
-    display:inline-block;
-    margin-top:14px;
-    padding:4px 12px;
-    border-radius:999px;
-    font-size:12px;
-    font-weight:700;
-    color:#c4b5fd;
-    background:rgba(124,92,255,.16);
-    border:1px solid rgba(124,92,255,.4);
-    opacity:0;
-    animation:rise .7s var(--ease) .85s forwards;
-}
-
-.w-sub{
-    max-width:340px;
-    margin:16px auto 32px;
-    color:var(--muted);
-    font-size:15px;
-    line-height:1.6;
-    opacity:0;
-    animation:rise .7s var(--ease) 1s forwards;
-}
-
-.enter-btn{
-    position:relative;
+    height:100%;
     overflow:hidden;
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    border:0;
-    padding:16px 34px;
-    border-radius:999px;
-    background:var(--grad);
-    color:#fff;
-    font-size:16px;
-    font-weight:700;
-    cursor:pointer;
-    box-shadow:0 14px 40px -10px rgba(124,92,255,.8);
-    opacity:0;
-    animation:rise .7s var(--ease) 1.15s forwards;
-    transition:transform .25s var(--ease), filter .25s;
+    background:#3b0f7a;
+    box-shadow:inset 0 0 34px rgba(8,2,20,.65);
+    transition:filter .6s ease;
 }
 
-.enter-btn svg{
-    width:20px; height:20px;
-    transition:transform .25s var(--ease);
+.portal-core::before{
+    content:"";
+    position:absolute;
+    inset:-80%;
+    background:conic-gradient(#7c3aed,#d946ef,#4c1d95,#a855f7,#6d28d9,#e879f9,#7c3aed);
+    filter:blur(10px);
+    animation:swirl 7s linear infinite;
 }
 
-.enter-btn:hover{ transform:translateY(-3px); filter:brightness(1.08); }
-.enter-btn:hover svg{ transform:translateX(4px); }
-.enter-btn:active{ transform:scale(.97); }
-
-.enter-btn::after{
+.portal-core::after{
     content:"";
     position:absolute;
     inset:0;
-    background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.4) 50%,transparent 70%);
-    transform:translateX(-130%);
-    animation:shimmer 3s ease-in-out 2.2s infinite;
+    background:
+        repeating-linear-gradient(0deg,rgba(255,255,255,.07) 0 4px,transparent 4px 8px),
+        repeating-linear-gradient(90deg,rgba(0,0,0,.14) 0 4px,transparent 4px 8px);
+    mix-blend-mode:overlay;
 }
 
-@keyframes shimmer{
-    0%{ transform:translateX(-130%); }
-    45%,100%{ transform:translateX(130%); }
+.spark{
+    position:absolute;
+    bottom:16px;
+    width:5px;
+    height:5px;
+    background:#e9d5ff;
+    box-shadow:0 0 8px #c084fc;
+    opacity:0;
+    animation:rise 3s ease-out infinite;
 }
 
-#welcome.go .w-title,
-#welcome.go .w-badge,
-#welcome.go .w-sub,
-#welcome.go .enter-btn{
-    opacity:0 !important;
-    transform:translateY(14px);
+.welcome-text{
     transition:opacity .35s ease, transform .35s ease;
-    animation:none;
 }
 
-/* =========================
-   WEBSITE
-========================= */
-
-#website{
-    position:relative;
-    z-index:1;
+.welcome-title{
+    font-family:var(--display);
+    font-size:clamp(30px,8vw,42px);
+    font-weight:700;
+    line-height:1.1;
+    margin-bottom:10px;
 }
 
-.reveal{ opacity:0; }
-
-.site-in .reveal{
-    animation:rise .85s var(--ease) both;
-    animation-delay:var(--d,0s);
+.welcome-title .beta{
+    margin-left:6px;
+    transform:translateY(-6px);
 }
+
+.welcome-subtitle{
+    max-width:310px;
+    margin:0 auto 26px;
+    color:var(--muted);
+    font-size:15px;
+}
+
+.enter-btn{
+    border:0;
+    padding:15px 32px;
+    border-radius:14px;
+    background:linear-gradient(135deg,var(--cta-a),var(--cta-b));
+    color:#fff;
+    font-family:var(--display);
+    font-size:16px;
+    font-weight:600;
+    box-shadow:
+        0 10px 30px rgba(124,58,237,.45),
+        inset 0 1px 0 rgba(255,255,255,.25);
+    transition:transform .15s var(--ease), box-shadow .15s;
+}
+
+.enter-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:
+        0 14px 36px rgba(124,58,237,.55),
+        inset 0 1px 0 rgba(255,255,255,.3);
+}
+
+.enter-btn:active{
+    transform:scale(.97);
+}
+
+/* --- saat tombol ditekan: portal menyala lalu kamu terbang masuk --- */
+
+#welcome.entering .welcome-text{
+    opacity:0;
+    transform:translateY(16px);
+    pointer-events:none;
+}
+
+#welcome.entering .spark{
+    display:none;
+}
+
+#welcome.entering .portal-core{
+    filter:brightness(1.55) saturate(1.25);
+}
+
+#welcome.entering .portal-core::before{
+    animation-duration:.9s;
+}
+
+#welcome.entering .portal-wrap{
+    transform:scale(26);
+    transition:transform 1.15s cubic-bezier(.55,.05,.85,.35) .55s;
+}
+
+@keyframes breathe{
+    0%,100%{ box-shadow:0 0 0 3px #0a0612,0 0 40px 4px rgba(168,85,247,.38),0 0 110px 24px rgba(124,58,237,.18); }
+    50%    { box-shadow:0 0 0 3px #0a0612,0 0 56px 10px rgba(168,85,247,.58),0 0 130px 36px rgba(124,58,237,.28); }
+}
+
+@keyframes swirl{
+    to{ transform:rotate(360deg); }
+}
+
+@keyframes rise{
+    0%  { transform:translateY(0) scale(1); opacity:0; }
+    15% { opacity:1; }
+    100%{ transform:translateY(-230px) scale(.3); opacity:0; }
+}
+
+/* web muncul setelah terbang masuk */
+#website.reveal{
+    animation:arrive .9s var(--ease) both;
+}
+
+@keyframes arrive{
+    from{ opacity:0; transform:scale(1.06); filter:blur(8px); }
+    to  { opacity:1; transform:none; filter:none; }
+}
+
+/* =====================================================
+   TOPBAR
+===================================================== */
 
 .topbar{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    max-width:1040px;
-    margin:0 auto;
-    padding:20px 18px 6px;
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(12,8,20,.78);
+    -webkit-backdrop-filter:blur(14px);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
 }
 
-.brand{
+.topbar-inner{
+    max-width:760px;
+    margin:auto;
+    padding:12px 16px;
     display:flex;
     align-items:center;
     gap:10px;
-    font-size:19px;
-    font-weight:800;
-    letter-spacing:-.02em;
 }
 
-.brand svg{ width:32px; height:32px; display:block; }
+.brand-mark{
+    width:20px;
+    height:28px;
+    background:linear-gradient(160deg,#c084fc,#6d28d9);
+    border:3px solid #1d1131;
+    box-shadow:0 0 0 1px #3b2a66,0 0 14px rgba(168,85,247,.65);
+}
 
-.beta{
-    font-size:11px;
+.brand{
+    font-family:var(--display);
+    font-size:21px;
     font-weight:700;
-    padding:3px 9px;
-    border-radius:999px;
-    color:#c4b5fd;
-    background:rgba(124,92,255,.16);
-    border:1px solid rgba(124,92,255,.38);
 }
 
-.wrap{
-    max-width:1040px;
-    margin:0 auto;
-    padding:0 18px 56px;
+/* =====================================================
+   SEARCH
+===================================================== */
+
+.search-box{
+    max-width:760px;
+    margin:auto;
+    padding:16px 16px 8px;
 }
 
-/* search */
-
-.search{
+.search-wrap{
     position:relative;
-    margin:12px 0 4px;
+    display:block;
 }
 
-.search svg{
+.search-wrap svg{
     position:absolute;
-    left:16px;
+    left:15px;
     top:50%;
-    width:20px; height:20px;
     transform:translateY(-50%);
     color:var(--muted);
     pointer-events:none;
 }
 
-.search input{
+.search-wrap input{
     width:100%;
-    padding:16px 16px 16px 48px;
-    border-radius:18px;
+    height:48px;
+    padding:0 16px 0 44px;
+    background:var(--surface);
     border:1px solid var(--line);
-    background:rgba(255,255,255,.06);
-    color:var(--text);
-    font-size:15px;
+    border-radius:14px;
     outline:none;
-    transition:border-color .2s, box-shadow .2s, background .2s;
+    font-size:15px;
+    transition:border-color .15s, box-shadow .15s;
 }
 
-.search input::placeholder{ color:#70759a; }
-
-.search input:focus{
-    border-color:rgba(124,92,255,.7);
-    background:rgba(255,255,255,.08);
-    box-shadow:0 0 0 4px rgba(124,92,255,.18);
+.search-wrap input::placeholder{
+    color:#7d7198;
 }
 
-/* tabs */
+.search-wrap input:focus{
+    border-color:var(--portal);
+    box-shadow:0 0 0 3px rgba(168,85,247,.2);
+}
 
-#tabs{
-    position:sticky;
-    top:0;
-    z-index:30;
+/* =====================================================
+   NAV
+===================================================== */
+
+nav{
     display:flex;
     gap:8px;
-    margin:0 -18px;
-    padding:10px 18px 12px;
     overflow-x:auto;
+    max-width:760px;
+    margin:auto;
+    padding:6px 16px 14px;
     scrollbar-width:none;
-    background:linear-gradient(rgba(7,8,15,.88),rgba(7,8,15,.55));
-    -webkit-backdrop-filter:blur(14px);
-            backdrop-filter:blur(14px);
 }
 
-#tabs::-webkit-scrollbar{ display:none; }
+nav::-webkit-scrollbar{
+    display:none;
+}
 
-#tabs button{
+nav button{
     flex-shrink:0;
-    padding:10px 17px;
+    padding:9px 16px;
     border-radius:999px;
     border:1px solid var(--line);
-    background:var(--glass);
-    color:var(--muted);
-    font-size:13.5px;
-    font-weight:600;
-    cursor:pointer;
-    transition:background .25s, color .25s, border-color .25s, box-shadow .25s, transform .15s;
+    background:var(--surface);
+    color:#cfc6ea;
+    font-size:14px;
+    font-weight:500;
+    transition:background .15s, border-color .15s, color .15s;
 }
 
-#tabs button:hover{ color:var(--text); border-color:rgba(255,255,255,.2); }
-#tabs button:active{ transform:scale(.96); }
+nav button:hover{
+    border-color:#4a3678;
+}
 
-#tabs button.active{
-    background:var(--grad);
+nav button.active{
     border-color:transparent;
+    background:linear-gradient(135deg,var(--cta-a),var(--cta-b));
     color:#fff;
-    box-shadow:0 8px 24px -8px rgba(124,92,255,.8);
+    box-shadow:0 6px 20px rgba(124,58,237,.35);
 }
 
-/* hero */
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.container{
+    max-width:760px;
+    margin:auto;
+    padding:6px 16px 48px;
+}
+
+.section-title{
+    font-family:var(--display);
+    font-size:24px;
+    font-weight:700;
+    margin:8px 0 16px;
+}
+
+.sub-title{
+    font-family:var(--display);
+    font-size:19px;
+    font-weight:600;
+    margin:6px 0 14px;
+}
+
+/* ---------- HERO ---------- */
 
 .hero{
     position:relative;
     overflow:hidden;
-    margin:10px 0 22px;
-    padding:32px 24px 28px;
-    border-radius:28px;
-    border:1px solid var(--line);
-    background:
-        linear-gradient(135deg,rgba(124,92,255,.3),rgba(34,211,238,.1) 58%,rgba(255,255,255,.03));
+    padding:24px 22px 22px;
+    margin-bottom:22px;
+    border-radius:22px;
+    border:1px solid #3b2a66;
+    background:linear-gradient(135deg,#2c1466 0%,#1b1040 55%,#130d20 100%);
 }
 
-.hero > *:not(.hero-cube){
-    position:relative;
-    z-index:2;
-}
-
-.hero h2{
-    max-width:15em;
-    font-size:clamp(27px,6.4vw,42px);
-    font-weight:800;
-    letter-spacing:-.03em;
-    line-height:1.12;
-}
-
-.hero p{
-    max-width:30em;
-    margin:14px 0 22px;
-    color:#b4b8d6;
-    font-size:15px;
-    line-height:1.65;
-}
-
-.hero-cta{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-}
-
-.btn-primary,
-.btn-ghost{
-    border:0;
-    padding:13px 20px;
-    border-radius:14px;
-    font-size:14px;
-    font-weight:700;
-    cursor:pointer;
-    transition:transform .2s var(--ease), filter .2s, background .2s;
-}
-
-.btn-primary{
-    background:var(--grad);
-    color:#fff;
-    box-shadow:0 10px 28px -10px rgba(124,92,255,.85);
-}
-
-.btn-ghost{
-    background:rgba(255,255,255,.08);
-    color:var(--text);
-    border:1px solid var(--line);
-}
-
-.btn-primary:hover,
-.btn-ghost:hover{ transform:translateY(-2px); filter:brightness(1.1); }
-.btn-primary:active,
-.btn-ghost:active{ transform:scale(.97); }
-
-.stats{
-    display:flex;
-    gap:28px;
-    margin-top:26px;
-}
-
-.stat b{
-    display:block;
-    font-size:24px;
-    font-weight:800;
-    letter-spacing:-.02em;
-}
-
-.stat span{
-    font-size:12.5px;
-    color:var(--muted);
-}
-
-.hero-cube{
-    position:absolute;
-    right:-14px;
-    top:50%;
-    z-index:1;
-    width:min(44%,230px);
-    aspect-ratio:1;
-    opacity:.95;
-    filter:drop-shadow(0 22px 40px rgba(124,92,255,.5));
-    animation:floatHero 6.5s ease-in-out infinite;
-}
-
-.hero-cube svg{ width:100%; height:100%; display:block; }
-
-@media (max-width:560px){
-    .hero{ padding:26px 20px 24px; }
-    .hero-cube{
-        width:150px;
-        right:-34px;
-        top:26%;
-        opacity:.3;
-    }
-}
-
-/* menu */
-
-.block-title{
-    font-size:17px;
-    font-weight:700;
-    letter-spacing:-.01em;
-    margin:0 0 12px;
-}
-
-.menu-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
-    gap:12px;
-    margin-bottom:30px;
-}
-
-.tile{
-    display:flex;
-    flex-direction:column;
-    align-items:flex-start;
-    gap:14px;
-    padding:16px;
-    border-radius:20px;
-    border:1px solid var(--line);
-    background:var(--glass);
-    color:var(--text);
-    text-align:left;
-    cursor:pointer;
-    transition:transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s;
-}
-
-.site-in .tile{
-    animation:rise .7s var(--ease) both;
-    animation-delay:calc(.6s + var(--i) * 70ms);
-}
-
-.tile:hover{
-    transform:translateY(-5px);
-    border-color:var(--c);
-    border-color:color-mix(in srgb,var(--c) 55%,transparent);
-    background:color-mix(in srgb,var(--c) 9%,rgba(255,255,255,.04));
-    box-shadow:0 18px 36px -18px var(--c);
-}
-
-.tile:active{ transform:scale(.97); }
-
-.tile .ico{
-    width:44px;
-    height:44px;
-    display:grid;
-    place-items:center;
-    border-radius:14px;
-    color:var(--c);
-    background:rgba(255,255,255,.07);
-    background:color-mix(in srgb,var(--c) 17%,transparent);
-}
-
-.tile .ico svg{ width:22px; height:22px; }
-
-.tile b{ display:block; font-size:15px; font-weight:700; }
-.tile small{ display:block; margin-top:2px; font-size:12.5px; color:var(--muted); }
-
-/* daftar file */
-
-.view-head{
-    display:flex;
-    align-items:baseline;
-    justify-content:space-between;
-    gap:12px;
-    margin:4px 0 14px;
-}
-
-.view-head h2{
-    font-size:22px;
-    font-weight:800;
-    letter-spacing:-.02em;
-}
-
-.view-head .count{
-    font-size:13px;
-    color:var(--muted);
-}
-
-.grid{
-    display:grid;
-    gap:12px;
-    grid-template-columns:1fr;
-}
-
-@media (min-width:720px){
-    .grid{ grid-template-columns:1fr 1fr; }
-}
-
-.card{
-    position:relative;
-    display:flex;
-    align-items:center;
-    gap:14px;
-    padding:14px;
-    overflow:hidden;
-    border-radius:20px;
-    border:1px solid var(--line);
-    background:var(--glass);
-    transition:border-color .3s, transform .3s var(--ease);
-}
-
-.site-in .card{
-    animation:rise .6s var(--ease) both;
-    animation-delay:calc(min(var(--i),12) * 45ms);
-}
-
-.card::before{
+.hero::before,
+.hero::after{
     content:"";
     position:absolute;
-    inset:0;
-    background:radial-gradient(260px circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.1),transparent 70%);
-    background:radial-gradient(260px circle at var(--mx,50%) var(--my,0%),color-mix(in srgb,var(--c) 24%,transparent),transparent 70%);
-    opacity:0;
-    transition:opacity .3s;
+    border-radius:50%;
     pointer-events:none;
 }
 
-.card:hover{
-    border-color:rgba(255,255,255,.2);
-    border-color:color-mix(in srgb,var(--c) 45%,transparent);
+.hero::before{
+    width:190px;
+    height:190px;
+    right:-60px;
+    top:-70px;
+    border:24px solid rgba(168,85,247,.16);
 }
 
-.card:hover::before{ opacity:1; }
+.hero::after{
+    width:90px;
+    height:90px;
+    right:46px;
+    bottom:-38px;
+    border:12px solid rgba(232,121,249,.14);
+}
 
-.card > *{ position:relative; }
-
-.logo{
+.hero > *{
     position:relative;
+    z-index:1;
+}
+
+.hero h2{
+    font-family:var(--display);
+    font-size:26px;
+    font-weight:700;
+    line-height:1.2;
+    margin-bottom:8px;
+    max-width:420px;
+}
+
+.hero p{
+    color:#cdbff0;
+    font-size:15px;
+    max-width:460px;
+}
+
+.hero-stats{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:16px;
+}
+
+.hero-stats span{
+    padding:6px 12px;
+    border-radius:999px;
+    background:rgba(12,8,20,.55);
+    border:1px solid rgba(168,85,247,.28);
+    color:#e5dbff;
+    font-size:13px;
+    font-weight:500;
+}
+
+/* ---------- MENU KATEGORI ---------- */
+
+.menu-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin-bottom:28px;
+}
+
+@media (min-width:520px){
+    .menu-grid{ grid-template-columns:repeat(3,1fr); }
+}
+
+.menu-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 14px;
+    text-align:left;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:16px;
+    transition:transform .15s var(--ease), border-color .15s, background .15s;
+}
+
+.menu-item:hover{
+    transform:translateY(-2px);
+    border-color:rgba(var(--rgb),.6);
+    background:var(--surface-2);
+}
+
+.menu-item:active{
+    transform:scale(.97);
+}
+
+.menu-icon{
+    width:44px;
+    height:44px;
     flex-shrink:0;
+    display:grid;
+    place-items:center;
+    border-radius:13px;
+    background:rgba(var(--rgb),.16);
+    font-size:22px;
+}
+
+.menu-text{
+    min-width:0;
+}
+
+.menu-name{
+    display:block;
+    font-family:var(--display);
+    font-size:15px;
+    font-weight:600;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.menu-count{
+    display:block;
+    font-size:12px;
+    color:var(--muted);
+}
+
+/* ---------- BARIS FILE ---------- */
+
+.file-card{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:12px;
+    margin-bottom:10px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:18px;
+    transition:transform .18s var(--ease), border-color .18s, box-shadow .18s;
+}
+
+.file-card:hover{
+    transform:translateY(-1px);
+    border-color:rgba(var(--rgb,168,85,247),.55);
+    box-shadow:0 10px 26px rgba(0,0,0,.35);
+}
+
+.file-card.enter{
+    animation:rise-in .38s var(--ease) both;
+    animation-delay:var(--d,0ms);
+}
+
+@keyframes rise-in{
+    from{ opacity:0; transform:translateY(10px); }
+    to  { opacity:1; transform:none; }
+}
+
+.file-logo{
+    position:relative;
     width:60px;
     height:60px;
+    flex-shrink:0;
     display:grid;
     place-items:center;
     overflow:hidden;
-    border-radius:17px;
-    color:#fff;
-    font-size:18px;
-    font-weight:800;
-    letter-spacing:-.02em;
-    background:var(--c);
-    background:linear-gradient(135deg,var(--c),color-mix(in srgb,var(--c) 45%,#000));
-    box-shadow:inset 0 0 0 1px rgba(255,255,255,.2),0 10px 22px -10px var(--c);
+    border-radius:16px;
+    background:linear-gradient(145deg,rgba(var(--rgb,168,85,247),.95),rgba(var(--rgb,168,85,247),.5));
+    color:#120a22;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);
 }
 
-.logo img{
+.file-logo span{
+    font-family:var(--display);
+    font-size:20px;
+    font-weight:700;
+}
+
+.file-logo img{
     position:absolute;
     inset:0;
     width:100%;
     height:100%;
     object-fit:cover;
-    background:#0d0e1a;
+    background:#0e0a18;
 }
 
-.info{
+.file-body{
     flex:1;
     min-width:0;
 }
 
-.name{
-    font-size:16px;
-    font-weight:700;
-    line-height:1.25;
-    letter-spacing:-.01em;
-    overflow-wrap:anywhere;
+.file-name{
+    font-size:15.5px;
+    font-weight:600;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    margin-bottom:7px;
 }
 
-.tags{
+.file-info{
     display:flex;
     flex-wrap:wrap;
     gap:6px;
-    margin-top:9px;
 }
 
 .tag{
     padding:3px 9px;
     border-radius:999px;
-    font-size:11.5px;
-    font-weight:600;
+    font-size:12px;
+    font-weight:500;
+    line-height:1.4;
 }
 
-.tag.cat{
-    color:var(--c);
-    background:rgba(255,255,255,.08);
-    background:color-mix(in srgb,var(--c) 15%,transparent);
+.tag-cat{
+    background:rgba(var(--rgb,168,85,247),.14);
+    color:var(--accent,#c4b5fd);
 }
 
-.tag.type{
-    color:var(--muted);
-    border:1px solid var(--line);
+.tag-type{
+    background:#1e1634;
+    color:#b8aad6;
 }
 
-.dl{
+.download{
     flex-shrink:0;
     display:inline-flex;
     align-items:center;
     gap:7px;
-    padding:11px 15px;
-    border-radius:14px;
-    background:var(--grad);
+    height:42px;
+    padding:0 16px;
+    border-radius:13px;
+    background:linear-gradient(135deg,var(--cta-a),var(--cta-b));
     color:#fff;
-    font-size:13.5px;
-    font-weight:700;
+    font-size:14px;
+    font-weight:600;
     text-decoration:none;
-    box-shadow:0 10px 24px -10px rgba(124,92,255,.8);
-    transition:transform .2s var(--ease), filter .2s;
+    box-shadow:0 6px 18px rgba(124,58,237,.35);
+    transition:transform .15s var(--ease), box-shadow .15s;
 }
 
-.dl svg{ width:17px; height:17px; }
-.dl:hover{ transform:translateY(-2px); filter:brightness(1.1); }
-.dl:active{ transform:scale(.96); }
+.download:hover{
+    transform:translateY(-1px);
+    box-shadow:0 9px 22px rgba(124,58,237,.5);
+}
+
+.download:active{
+    transform:scale(.95);
+}
 
 @media (max-width:380px){
-    .dl span{ display:none; }
-    .dl{ padding:12px; }
+    .download span{ display:none; }
+    .download{ width:42px; padding:0; justify-content:center; }
 }
 
-.empty{
-    grid-column:1/-1;
-    padding:48px 12px;
-    text-align:center;
+/* ---------- LAPORAN ---------- */
+
+.report-note{
     color:var(--muted);
     font-size:14px;
+    margin:-6px 0 16px;
 }
 
-/* laporan */
-
-.panel{
-    padding:22px;
-    border-radius:24px;
+.report-box{
+    padding:18px;
+    background:var(--surface);
     border:1px solid var(--line);
-    background:var(--glass);
-    max-width:620px;
+    border-radius:18px;
 }
 
-.panel label{
-    display:block;
-    margin:0 0 7px;
-    font-size:13px;
-    font-weight:600;
-    color:#b4b8d6;
-}
-
-.panel input,
-.panel textarea{
+.report-box input,
+.report-box textarea{
     width:100%;
-    margin-bottom:16px;
-    padding:14px 15px;
-    border-radius:14px;
+    padding:14px;
+    margin-bottom:12px;
+    background:#0e0a18;
     border:1px solid var(--line);
-    background:rgba(255,255,255,.05);
-    color:var(--text);
-    font-size:15px;
+    border-radius:12px;
     outline:none;
-    transition:border-color .2s, box-shadow .2s;
+    font-size:15px;
+    transition:border-color .15s, box-shadow .15s;
 }
 
-.panel textarea{
+.report-box input:focus,
+.report-box textarea:focus{
+    border-color:var(--portal);
+    box-shadow:0 0 0 3px rgba(168,85,247,.2);
+}
+
+.report-box textarea{
     min-height:130px;
     resize:vertical;
 }
 
-.panel input:focus,
-.panel textarea:focus{
-    border-color:rgba(124,92,255,.7);
-    box-shadow:0 0 0 4px rgba(124,92,255,.18);
+.report-btn{
+    border:0;
+    padding:13px 22px;
+    border-radius:13px;
+    background:linear-gradient(135deg,var(--cta-a),var(--cta-b));
+    color:#fff;
+    font-weight:600;
+    box-shadow:0 6px 18px rgba(124,58,237,.35);
+    transition:transform .15s var(--ease);
 }
 
-/* footer */
+.report-btn:active{
+    transform:scale(.97);
+}
+
+/* ---------- KOSONG & FOOTER ---------- */
+
+.empty{
+    padding:44px 10px;
+    text-align:center;
+    color:#7d7198;
+}
 
 footer{
-    position:relative;
-    z-index:1;
-    padding:26px 18px 34px;
-    text-align:center;
-    color:#5f6488;
-    font-size:13px;
+    padding:28px 16px;
     border-top:1px solid var(--line);
+    text-align:center;
+    color:#6f6489;
+    font-size:13px;
 }
 
 @media (prefers-reduced-motion: reduce){
-    *,*::before,*::after{
-        animation:none !important;
-        transition:none !important;
-    }
-    .reveal,
-    .w-title .ch,
-    .w-badge,
-    .w-sub,
-    .enter-btn{
-        opacity:1 !important;
-        transform:none !important;
+    *,
+    *::before,
+    *::after{
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:.01ms !important;
     }
 }
 </style>
 </head>
 
-<body class="locked">
-
-<!-- simbol blok isometrik (dipakai ulang) -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <defs>
-        <linearGradient id="gTop" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#d8ccff"/>
-            <stop offset="1" stop-color="#8b6cff"/>
-        </linearGradient>
-        <linearGradient id="gLeft" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#6d4df0"/>
-            <stop offset="1" stop-color="#34259c"/>
-        </linearGradient>
-        <linearGradient id="gRight" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#2ee0f5"/>
-            <stop offset="1" stop-color="#0c6a85"/>
-        </linearGradient>
-        <symbol id="cube" viewBox="0 0 120 120">
-            <polygon points="60,8 110,36 60,64 10,36" fill="url(#gTop)"/>
-            <polygon points="10,36 60,64 60,116 10,88" fill="url(#gLeft)"/>
-            <polygon points="110,36 60,64 60,116 110,88" fill="url(#gRight)"/>
-            <path d="M35 22L85 50M85 22L35 50M35 50V102M10 62L60 90M85 50V102M60 90L110 62"
-                  stroke="rgba(255,255,255,.2)" stroke-width="1.5" fill="none"/>
-            <polygon points="60,8 110,36 60,64 10,36" fill="none"
-                     stroke="rgba(255,255,255,.45)" stroke-width="1.5" stroke-linejoin="round"/>
-        </symbol>
-    </defs>
-</svg>
-
-<div class="aurora"><i></i><i></i><i></i></div>
+<body>
 
 
 <!-- =====================================================
-     INTRO
+     WELCOME (portal)
 ===================================================== -->
 
 <div id="welcome">
 
-    <div class="w-inner">
+    <div class="welcome-stage">
 
-        <div class="w-cube">
-            <svg viewBox="0 0 120 120"><use href="#cube" width="120" height="120"/></svg>
+        <div class="portal-wrap" id="portalWrap" aria-hidden="true">
+
+            <div class="portal-frame">
+                <div class="portal-core"></div>
+            </div>
+
         </div>
 
-        <h1 class="w-title" id="wTitle" aria-label="EDO Web"></h1>
+        <div class="welcome-text">
 
-        <span class="w-badge">Beta</span>
+            <h1 class="welcome-title">
+                EDO Web <span class="beta">Beta</span>
+            </h1>
 
-        <p class="w-sub">
-            Add-on, map, texture pack, APK, dan script Minecraft Bedrock dalam satu tempat.
-        </p>
+            <p class="welcome-subtitle">
+                Add-on, map, texture pack, APK, dan script Minecraft Bedrock di satu tempat.
+            </p>
 
-        <button class="enter-btn" id="enterBtn" type="button">
-            Masuk
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
-                 stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
-        </button>
+            <button class="enter-btn" onclick="enterWebsite()">
+                Masuk ke Web
+            </button>
+
+        </div>
 
     </div>
 
@@ -901,109 +821,141 @@ footer{
      WEBSITE
 ===================================================== -->
 
-<div id="website">
+<div id="website" style="display:none;">
 
-    <header class="topbar reveal" style="--d:0s">
 
-        <div class="brand">
-            <svg viewBox="0 0 120 120"><use href="#cube" width="120" height="120"/></svg>
-            EDO Web
-        </div>
+<div class="topbar">
+
+    <div class="topbar-inner">
+
+        <span class="brand-mark" aria-hidden="true"></span>
+
+        <span class="brand">EDO Web</span>
 
         <span class="beta">Beta</span>
 
-    </header>
+    </div>
+
+</div>
 
 
-    <main class="wrap">
+<div class="search-box">
 
-        <div class="search reveal" style="--d:.1s">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                 stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-            <input id="searchInput" type="search" autocomplete="off"
-                   placeholder="Cari add-on, map, APK, texture pack...">
-        </div>
+    <label class="search-wrap">
 
-        <nav id="tabs" class="reveal" style="--d:.18s" aria-label="Kategori"></nav>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"/>
+            <path d="m20 20-3.5-3.5"/>
+        </svg>
 
+        <input
+            id="searchInput"
+            type="text"
+            placeholder="Cari add-on, map, APK, texture pack..."
+            oninput="searchFiles()"
+        >
 
-        <!-- HOME: hero + menu -->
-        <div id="homeExtra">
+    </label>
 
-            <section class="hero reveal" style="--d:.26s">
-
-                <div class="hero-cube">
-                    <svg viewBox="0 0 120 120"><use href="#cube" width="120" height="120"/></svg>
-                </div>
-
-                <h2 class="reveal" style="--d:.38s">
-                    Konten Minecraft Bedrock, satu tempat.
-                </h2>
-
-                <p class="reveal" style="--d:.46s">
-                    Add-on, map, texture pack, APK, dan script.
-                    Cari yang kamu mau, lalu unduh.
-                </p>
-
-                <div class="hero-cta reveal" style="--d:.54s">
-                    <button class="btn-primary" type="button" data-go="addon">Lihat add-ons</button>
-                    <button class="btn-ghost" type="button" data-go="report">Lapor masalah</button>
-                </div>
-
-                <div class="stats reveal" style="--d:.62s">
-                    <div class="stat"><b id="statFiles" data-to="0">0</b><span>file</span></div>
-                    <div class="stat"><b id="statCats" data-to="0">0</b><span>kategori</span></div>
-                </div>
-
-            </section>
-
-            <h3 class="block-title reveal" style="--d:.5s">Kategori</h3>
-
-            <div class="menu-grid" id="menuGrid"></div>
-
-        </div>
+</div>
 
 
-        <!-- DAFTAR FILE -->
-        <section id="listView">
+<nav>
 
-            <div class="view-head">
-                <h2 id="viewTitle">Terbaru</h2>
-                <span class="count" id="viewCount"></span>
-            </div>
+    <button class="active" onclick="showCategory('home',this)">Beranda</button>
 
-            <div class="grid" id="fileList"></div>
+    <button onclick="showCategory('addon',this)">Add-ons</button>
 
-        </section>
+    <button onclick="showCategory('map',this)">Map</button>
 
+    <button onclick="showCategory('texture',this)">Texture Pack</button>
 
-        <!-- LAPORAN -->
-        <section id="reportView" hidden>
+    <button onclick="showCategory('apk',this)">APK</button>
 
-            <div class="view-head">
-                <h2>Laporan</h2>
-            </div>
+    <button onclick="showCategory('script',this)">Script</button>
 
-            <div class="panel">
+    <button onclick="showReport(this)">Laporan</button>
 
-                <label for="reportName">Nama file</label>
-                <input id="reportName" type="text" placeholder="Contoh: Jenny Mod">
-
-                <label for="reportMessage">Masalahnya apa?</label>
-                <textarea id="reportMessage" placeholder="Jelaskan masalahnya..."></textarea>
-
-                <button class="btn-primary" type="button" id="reportBtn">Kirim laporan</button>
-
-            </div>
-
-        </section>
-
-    </main>
+</nav>
 
 
-    <footer>
-        EDO Web (Beta) © 2026
-    </footer>
+<div class="container">
+
+
+<section id="fileSection">
+
+    <h2 class="section-title" id="sectionTitle">Beranda</h2>
+
+
+    <div id="homeHero" class="hero">
+
+        <h2>Selamat datang di EDO Web 👋</h2>
+
+        <p>
+            Tempat berbagi konten Minecraft Bedrock,
+            mulai dari add-ons, map, texture pack, APK,
+            sampai script.
+        </p>
+
+        <div class="hero-stats" id="heroStats"></div>
+
+    </div>
+
+
+    <div id="homeMenu">
+
+        <h3 class="sub-title">Kategori</h3>
+
+        <div class="menu-grid" id="menuGrid"></div>
+
+        <h3 class="sub-title">Terbaru</h3>
+
+    </div>
+
+
+    <div id="fileList"></div>
+
+</section>
+
+
+<section id="reportSection" style="display:none;">
+
+    <h2 class="section-title">Laporan</h2>
+
+    <p class="report-note">
+        Ada file yang bermasalah? Tulis nama file dan masalahnya,
+        laporan dikirim lewat WhatsApp.
+    </p>
+
+    <div class="report-box">
+
+        <input
+            id="reportName"
+            type="text"
+            placeholder="Nama file"
+        >
+
+        <textarea
+            id="reportMessage"
+            placeholder="Jelaskan masalahnya..."
+        ></textarea>
+
+        <button class="report-btn" onclick="sendReport()">
+            Kirim laporan
+        </button>
+
+    </div>
+
+</section>
+
+
+</div>
+
+
+<footer>
+    EDO Web (Beta) © 2026
+</footer>
+
 
 </div>
 
@@ -1012,12 +964,15 @@ footer{
 
 /* =====================================================
    DATABASE FILE
+===================================================== */
 
+/*
    LOGO: isi "icon" dengan link gambar atau path file,
    contoh:  icon:"icons/jenny.png"
+            icon:"https://situsmu.com/logo.png"
    Kalau dikosongkan / gagal dimuat, otomatis tampil
    inisial nama (contoh: JM untuk Jenny Mod).
-===================================================== */
+*/
 
 const files = [
 
@@ -1225,71 +1180,525 @@ const files = [
 
 
 /* =====================================================
-   KATEGORI
+   KATEGORI & MENU
 ===================================================== */
 
-const svg = body =>
-    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${body}</svg>`;
+const categoryNames = {
 
-const ICON = {
+    home:"Beranda",
 
-    addon: svg('<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05"/><path d="M12 22.08V12"/>'),
+    addon:"Add-ons",
 
-    map: svg('<path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15"/><path d="M15 6v15"/>'),
+    map:"Map",
 
-    texture: svg('<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>'),
+    texture:"Texture Pack",
 
-    apk: svg('<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/>'),
+    apk:"APK",
 
-    script: svg('<path d="M16 18l6-6-6-6"/><path d="M8 6l-6 6 6 6"/>'),
-
-    report: svg('<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7"/>'),
-
-    download: svg('<path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M5 21h14"/>')
+    script:"Script"
 
 };
 
-const categories = {
 
-    addon:   { name:"Add-ons",      color:"#a78bfa" },
+const menuItems = [
 
-    map:     { name:"Map",          color:"#34d399" },
+    { key:"addon",   icon:"🧩", name:"Add-ons" },
 
-    texture: { name:"Texture Pack", color:"#fbbf24" },
+    { key:"map",     icon:"🗺️", name:"Map" },
 
-    apk:     { name:"APK",          color:"#22d3ee" },
+    { key:"texture", icon:"🎨", name:"Texture Pack" },
 
-    script:  { name:"Script",       color:"#fb7185" }
+    { key:"apk",     icon:"📱", name:"APK & Client" },
 
-};
+    { key:"script",  icon:"📜", name:"Script" },
 
-const tabs = [
-
-    { key:"home",    label:"Home" },
-
-    { key:"addon",   label:"Add-ons" },
-
-    { key:"map",     label:"Map" },
-
-    { key:"texture", label:"Texture Pack" },
-
-    { key:"apk",     label:"APK" },
-
-    { key:"script",  label:"Script" },
-
-    { key:"report",  label:"Laporan" }
+    { key:"report",  icon:"🚩", name:"Laporan" }
 
 ];
 
 
-let current = "home";
-let query = "";
+const ICON_DL =
+    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>';
 
-const $ = id => document.getElementById(id);
+
+let currentCategory = "home";
 
 
 /* =====================================================
-   HELPER
+   ANIMASI MASUK  -  terbang masuk ke portal
+===================================================== */
+
+function showSite(withReveal){
+
+    const site = document.getElementById("website");
+
+    site.style.display = "block";
+
+    if(withReveal){
+
+        site.classList.add("reveal");
+
+        setTimeout(() => site.classList.remove("reveal"), 1000);
+
+    }
+
+    showCategory("home");
+
+    window.scrollTo(0,0);
+
+}
+
+
+function enterWebsite(){
+
+    const welcome = document.getElementById("welcome");
+
+    if(welcome.classList.contains("entering")) return;
+
+    const reduceMotion =
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if(reduceMotion){
+
+        welcome.style.display = "none";
+
+        showSite(false);
+
+        return;
+
+    }
+
+    // 1) portal menyala, teks hilang  2) kamera terbang masuk
+    welcome.classList.add("entering");
+
+    // 3) web muncul dari balik cahaya portal
+    setTimeout(() => {
+
+        showSite(true);
+
+        welcome.classList.add("leaving");
+
+    },1350);
+
+    setTimeout(() => {
+
+        welcome.style.display = "none";
+
+    },2000);
+
+}
+
+
+/* percikan partikel di sekitar portal */
+(function makeSparks(){
+
+    const wrap = document.getElementById("portalWrap");
+
+    for(let i = 0; i < 14; i++){
+
+        const s = document.createElement("span");
+
+        s.className = "spark";
+
+        s.style.left = (8 + Math.random() * 84) + "%";
+
+        s.style.animationDelay = (Math.random() * 3) + "s";
+
+        s.style.animationDuration = (2.4 + Math.random() * 2) + "s";
+
+        wrap.appendChild(s);
+
+    }
+
+})();
+
+
+/* =====================================================
+   HOME MENU
+===================================================== */
+
+function renderHomeMenu(){
+
+    const grid = document.getElementById("menuGrid");
+
+    grid.innerHTML = "";
+
+    document.getElementById("heroStats").innerHTML = `
+        <span>${files.length} file</span>
+        <span>${menuItems.length - 1} kategori</span>
+    `;
+
+    menuItems.forEach(item => {
+
+        const total = files.filter(f => f.category === item.key).length;
+
+        const info = item.key === "report"
+            ? "Lapor masalah"
+            : total + " file";
+
+        const btn = document.createElement("button");
+
+        btn.className = "menu-item cat-" + item.key;
+
+        btn.innerHTML = `
+            <span class="menu-icon">${item.icon}</span>
+            <span class="menu-text">
+                <span class="menu-name">${escapeHTML(item.name)}</span>
+                <span class="menu-count">${escapeHTML(info)}</span>
+            </span>
+        `;
+
+        btn.onclick = () => openFromMenu(item.key);
+
+        grid.appendChild(btn);
+
+    });
+
+}
+
+
+function openFromMenu(key){
+
+    const match = key === "report" ? "showReport" : "'" + key + "'";
+
+    const navBtn = [...document.querySelectorAll("nav button")]
+        .find(b => (b.getAttribute("onclick") || "").includes(match));
+
+    if(key === "report"){
+
+        showReport(navBtn);
+
+    }else{
+
+        showCategory(key,navBtn);
+
+    }
+
+    window.scrollTo({ top:0, behavior:"smooth" });
+
+}
+
+
+/* =====================================================
+   SHOW CATEGORY
+===================================================== */
+
+function showCategory(category,button){
+
+    currentCategory = category;
+
+    document.getElementById("fileSection").style.display = "block";
+
+    document.getElementById("reportSection").style.display = "none";
+
+
+    const title = document.getElementById("sectionTitle");
+
+    title.textContent = categoryNames[category];
+
+    title.style.display = category === "home" ? "none" : "block";
+
+
+    document
+        .querySelectorAll("nav button")
+        .forEach(btn => btn.classList.remove("active"));
+
+    if(button){
+
+        button.classList.add("active");
+
+    }
+
+
+    document.getElementById("searchInput").value = "";
+
+
+    const isHome = category === "home";
+
+    document.getElementById("homeHero").style.display =
+        isHome ? "block" : "none";
+
+    document.getElementById("homeMenu").style.display =
+        isHome ? "block" : "none";
+
+    if(isHome){
+
+        renderHomeMenu();
+
+    }
+
+
+    renderFiles();
+
+}
+
+
+/* =====================================================
+   LOGO & KARTU FILE
+===================================================== */
+
+function logoHTML(file){
+
+    const initials =
+        (file.name.match(/[A-Za-z0-9]+/g) || ["?"])
+        .slice(0,2)
+        .map(w => w[0].toUpperCase())
+        .join("");
+
+    const img = file.icon
+        ? `<img src="${escapeHTML(file.icon)}"
+                alt="Logo ${escapeHTML(file.name)}"
+                loading="lazy"
+                onerror="this.remove()">`
+        : "";
+
+    return `
+        <div class="file-logo">
+            <span>${escapeHTML(initials)}</span>
+            ${img}
+        </div>
+    `;
+
+}
+
+
+function createCard(file,index,animate){
+
+    const card = document.createElement("div");
+
+    card.className =
+        "file-card cat-" + file.category + (animate ? " enter" : "");
+
+    if(animate){
+
+        card.style.setProperty("--d", Math.min(index * 35,280) + "ms");
+
+    }
+
+    card.innerHTML = `
+
+        ${logoHTML(file)}
+
+        <div class="file-body">
+
+            <div class="file-name">${escapeHTML(file.name)}</div>
+
+            <div class="file-info">
+
+                <span class="tag tag-cat">
+                    ${escapeHTML(categoryNames[file.category])}
+                </span>
+
+                <span class="tag tag-type">
+                    ${escapeHTML(file.type)}
+                </span>
+
+            </div>
+
+        </div>
+
+        <a
+            class="download"
+            href="${escapeHTML(file.url)}"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Unduh ${escapeHTML(file.name)}"
+        >
+            ${ICON_DL}
+            <span>Unduh</span>
+        </a>
+
+    `;
+
+    return card;
+
+}
+
+
+function paintFiles(list,emptyText,animate){
+
+    const container = document.getElementById("fileList");
+
+    container.innerHTML = "";
+
+    if(list.length === 0){
+
+        container.innerHTML = `
+            <div class="empty">${escapeHTML(emptyText)}</div>
+        `;
+
+        return;
+
+    }
+
+    list.forEach((file,i) => {
+
+        container.appendChild(createCard(file,i,animate));
+
+    });
+
+}
+
+
+/* =====================================================
+   RENDER FILES
+===================================================== */
+
+function renderFiles(){
+
+    let list;
+
+    if(currentCategory === "home"){
+
+        // Beranda: 5 file terbaru (yang terakhir ditambahkan)
+        list = files.slice(-5).reverse();
+
+    }else{
+
+        list = files.filter(file =>
+            file.category === currentCategory
+        );
+
+    }
+
+    paintFiles(list,"Belum ada file di kategori ini.",true);
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+function searchFiles(){
+
+    const query =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    // di Beranda, menu hanya tampil saat kolom cari kosong
+    const showMenu = currentCategory === "home" && !query;
+
+    document.getElementById("homeMenu").style.display =
+        showMenu ? "block" : "none";
+
+    document.getElementById("homeHero").style.display =
+        showMenu ? "block" : "none";
+
+
+    if(!query){
+
+        renderFiles();
+
+        return;
+
+    }
+
+
+    const result = files.filter(file => {
+
+        const text = (
+
+            file.name +
+            " " +
+            file.type +
+            " " +
+            categoryNames[file.category]
+
+        ).toLowerCase();
+
+
+        const categoryMatch =
+            currentCategory === "home" ||
+            file.category === currentCategory;
+
+
+        return categoryMatch && text.includes(query);
+
+    });
+
+
+    paintFiles(result,"File tidak ditemukan.",false);
+
+}
+
+
+/* =====================================================
+   REPORT
+===================================================== */
+
+function showReport(button){
+
+    document.getElementById("fileSection").style.display = "none";
+
+    document.getElementById("reportSection").style.display = "block";
+
+
+    document
+        .querySelectorAll("nav button")
+        .forEach(btn => btn.classList.remove("active"));
+
+
+    if(button){
+
+        button.classList.add("active");
+
+    }
+
+}
+
+
+function sendReport(){
+
+    const name =
+        document.getElementById("reportName").value.trim();
+
+    const message =
+        document.getElementById("reportMessage").value.trim();
+
+
+    if(!name || !message){
+
+        alert("Isi nama file dan laporan terlebih dahulu.");
+
+        return;
+
+    }
+
+
+    /*
+       GANTI DENGAN NOMOR WHATSAPP KAMU.
+       Contoh:
+       628123456789
+    */
+
+    const whatsappNumber = "628XXXXXXXXXX";
+
+
+    const text =
+        "LAPORAN EDO WEB\n\n" +
+        "File: " + name + "\n\n" +
+        "Laporan:\n" + message;
+
+
+    const url =
+        "https://wa.me/" +
+        whatsappNumber +
+        "?text=" +
+        encodeURIComponent(text);
+
+
+    window.open(url,"_blank");
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
 ===================================================== */
 
 function escapeHTML(value){
@@ -1309,418 +1718,11 @@ function escapeHTML(value){
 }
 
 
-function initials(name){
-
-    return (name.match(/[A-Za-z0-9]+/g) || ["?"])
-        .slice(0,2)
-        .map(w => w[0].toUpperCase())
-        .join("");
-
-}
-
-
-/* =====================================================
-   KARTU FILE
-===================================================== */
-
-function cardHTML(file,i){
-
-    const cat = categories[file.category] || { name:file.category, color:"#7c5cff" };
-
-    const img = file.icon
-        ? `<img src="${escapeHTML(file.icon)}"
-                alt="Logo ${escapeHTML(file.name)}"
-                loading="lazy"
-                referrerpolicy="no-referrer"
-                onerror="this.remove()">`
-        : "";
-
-    return `
-
-        <article class="card" style="--c:${cat.color};--i:${i}">
-
-            <div class="logo">
-                <span>${escapeHTML(initials(file.name))}</span>
-                ${img}
-            </div>
-
-            <div class="info">
-
-                <div class="name">${escapeHTML(file.name)}</div>
-
-                <div class="tags">
-                    <span class="tag cat">${escapeHTML(cat.name)}</span>
-                    <span class="tag type">${escapeHTML(file.type)}</span>
-                </div>
-
-            </div>
-
-            <a
-                class="dl"
-                href="${escapeHTML(file.url)}"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Unduh ${escapeHTML(file.name)}"
-            >
-                ${ICON.download}
-                <span>Unduh</span>
-            </a>
-
-        </article>
-
-    `;
-
-}
-
-
-/* =====================================================
-   RENDER
-===================================================== */
-
-function render(){
-
-    const q = query.trim().toLowerCase();
-
-    const showReport = current === "report" && !q;
-
-    $("reportView").hidden = !showReport;
-
-    $("listView").hidden = showReport;
-
-    $("homeExtra").hidden = !(current === "home" && !q);
-
-    if(showReport) return;
-
-
-    let list, title;
-
-    if(q){
-
-        list = files.filter(f =>
-            (f.name + " " + f.type + " " +
-             (categories[f.category] ? categories[f.category].name : ""))
-            .toLowerCase()
-            .includes(q)
-        );
-
-        title = "Hasil pencarian";
-
-    }else if(current === "home"){
-
-        list = files.slice(-6).reverse();
-
-        title = "Terbaru";
-
-    }else{
-
-        list = files.filter(f => f.category === current);
-
-        title = categories[current].name;
-
-    }
-
-
-    $("viewTitle").textContent = title;
-
-    $("viewCount").textContent = list.length + " file";
-
-
-    if(list.length === 0){
-
-        $("fileList").innerHTML = `
-            <div class="empty">
-                ${q ? "File tidak ditemukan." : "Belum ada file di kategori ini."}
-            </div>
-        `;
-
-        return;
-
-    }
-
-    $("fileList").innerHTML =
-        list.map((file,i) => cardHTML(file,i)).join("");
-
-}
-
-
-/* =====================================================
-   NAVIGASI
-===================================================== */
-
-function setActiveTab(key){
-
-    document.querySelectorAll("#tabs button").forEach(btn => {
-
-        btn.classList.toggle("active", btn.dataset.key === key);
-
-    });
-
-}
-
-
-function go(key){
-
-    current = key;
-
-    query = "";
-
-    $("searchInput").value = "";
-
-    setActiveTab(key);
-
-    render();
-
-    window.scrollTo({ top:0, behavior:"smooth" });
-
-}
-
-
-function buildTabs(){
-
-    $("tabs").innerHTML = tabs.map(t => `
-        <button type="button" data-key="${t.key}">${t.label}</button>
-    `).join("");
-
-    $("tabs").addEventListener("click", e => {
-
-        const btn = e.target.closest("button");
-
-        if(btn) go(btn.dataset.key);
-
-    });
-
-    setActiveTab(current);
-
-}
-
-
-function buildMenu(){
-
-    const items = Object.keys(categories).map(key => ({
-        key,
-        name:categories[key].name,
-        color:categories[key].color,
-        info:files.filter(f => f.category === key).length + " file"
-    }));
-
-    items.push({
-        key:"report",
-        name:"Laporan",
-        color:"#94a3b8",
-        info:"Lapor masalah"
-    });
-
-    $("menuGrid").innerHTML = items.map((it,i) => `
-        <button class="tile" type="button" data-go="${it.key}" style="--c:${it.color};--i:${i}">
-            <span class="ico">${ICON[it.key]}</span>
-            <span>
-                <b>${escapeHTML(it.name)}</b>
-                <small>${escapeHTML(it.info)}</small>
-            </span>
-        </button>
-    `).join("");
-
-}
-
-
-document.addEventListener("click", e => {
-
-    const el = e.target.closest("[data-go]");
-
-    if(el) go(el.dataset.go);
-
-});
-
-
-/* cahaya mengikuti jari / kursor pada kartu */
-$("fileList").addEventListener("pointermove", e => {
-
-    const card = e.target.closest(".card");
-
-    if(!card) return;
-
-    const r = card.getBoundingClientRect();
-
-    card.style.setProperty("--mx", (e.clientX - r.left) + "px");
-
-    card.style.setProperty("--my", (e.clientY - r.top) + "px");
-
-});
-
-
-$("searchInput").addEventListener("input", e => {
-
-    query = e.target.value;
-
-    render();
-
-});
-
-
-/* =====================================================
-   LAPORAN
-===================================================== */
-
-function sendReport(){
-
-    const name = $("reportName").value.trim();
-
-    const message = $("reportMessage").value.trim();
-
-    if(!name || !message){
-
-        alert("Isi nama file dan laporan terlebih dahulu.");
-
-        return;
-
-    }
-
-    /*
-       GANTI DENGAN NOMOR WHATSAPP KAMU.
-       Contoh:
-       628123456789
-    */
-
-    const whatsappNumber = "628XXXXXXXXXX";
-
-    const text =
-        "LAPORAN EDO WEB\n\n" +
-        "File: " + name + "\n\n" +
-        "Laporan:\n" + message;
-
-    const url =
-        "https://wa.me/" +
-        whatsappNumber +
-        "?text=" +
-        encodeURIComponent(text);
-
-    window.open(url,"_blank");
-
-}
-
-$("reportBtn").addEventListener("click", sendReport);
-
-
-/* =====================================================
-   INTRO
-===================================================== */
-
-function countUp(el,duration){
-
-    const to = Number(el.dataset.to) || 0;
-
-    const start = performance.now();
-
-    function tick(now){
-
-        const t = Math.min(1,(now - start) / duration);
-
-        const eased = 1 - Math.pow(1 - t,3);
-
-        el.textContent = Math.round(to * eased);
-
-        if(t < 1) requestAnimationFrame(tick);
-
-    }
-
-    requestAnimationFrame(tick);
-
-}
-
-
-function startSite(){
-
-    $("website").classList.add("site-in");
-
-    countUp($("statFiles"),1200);
-
-    countUp($("statCats"),900);
-
-}
-
-
-function finishIntro(){
-
-    const welcome = $("welcome");
-
-    if(welcome) welcome.remove();
-
-    document.body.classList.remove("locked");
-
-}
-
-
-function enterWebsite(){
-
-    const welcome = $("welcome");
-
-    if(welcome.classList.contains("go")) return;
-
-    const reduceMotion =
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if(reduceMotion){
-
-        startSite();
-
-        finishIntro();
-
-        return;
-
-    }
-
-    // titik buka/tutup layar = posisi tombol
-    const r = $("enterBtn").getBoundingClientRect();
-
-    welcome.style.setProperty("--x", (r.left + r.width / 2) + "px");
-
-    welcome.style.setProperty("--y", (r.top + r.height / 2) + "px");
-
-    welcome.classList.add("go");
-
-    // 1) blok berputar, teks memudar
-    // 2) layar menutup ke arah tombol
-    setTimeout(() => welcome.classList.add("wipe"), 600);
-
-    // 3) isi website muncul bertahap
-    setTimeout(startSite, 950);
-
-    setTimeout(finishIntro, 1800);
-
-}
-
-
-/* judul intro: huruf muncul satu per satu */
-"EDO Web".split("").forEach((ch,i) => {
-
-    const span = document.createElement("span");
-
-    span.className = "ch";
-
-    span.style.setProperty("--i", i);
-
-    span.textContent = ch === " " ? "\u00A0" : ch;
-
-    $("wTitle").appendChild(span);
-
-});
-
-$("enterBtn").addEventListener("click", enterWebsite);
-
-
 /* =====================================================
    START
 ===================================================== */
 
-$("statFiles").dataset.to = files.length;
-
-$("statCats").dataset.to = Object.keys(categories).length;
-
-buildTabs();
-
-buildMenu();
-
-render();
+renderFiles();
 
 </script>
 
