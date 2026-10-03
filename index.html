@@ -11,7 +11,7 @@
     box-sizing:border-box;
     margin:0;
     padding:0;
-    font-family:Arial, sans-serif;
+    font-family:Arial,sans-serif;
 }
 
 html{
@@ -19,26 +19,33 @@ html{
 }
 
 body{
-    background:
-        radial-gradient(circle at 20% 10%, rgba(67,80,255,.18), transparent 25%),
-        radial-gradient(circle at 80% 20%, rgba(130,50,255,.15), transparent 25%),
-        #080b14;
-    color:#fff;
+    background:#080b14;
+    color:white;
     min-height:100vh;
+    overflow-x:hidden;
 }
-
-/* BACKGROUND */
 
 body::before{
     content:"";
     position:fixed;
     inset:0;
+    z-index:-2;
+    background:
+        radial-gradient(circle at 20% 10%,rgba(55,85,255,.18),transparent 28%),
+        radial-gradient(circle at 85% 15%,rgba(135,55,255,.16),transparent 30%),
+        linear-gradient(rgba(70,90,255,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(70,90,255,.035) 1px,transparent 1px);
+    background-size:auto,auto,45px 45px,45px 45px;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-1;
     pointer-events:none;
     background:
-        linear-gradient(rgba(80,100,255,.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(80,100,255,.035) 1px, transparent 1px);
-    background-size:45px 45px;
-    mask-image:linear-gradient(to bottom, black, transparent);
+        radial-gradient(circle at 50% 35%,rgba(50,80,255,.07),transparent 35%);
 }
 
 /* HEADER */
@@ -47,10 +54,10 @@ header{
     position:sticky;
     top:0;
     z-index:1000;
-    padding:16px 20px;
-    background:rgba(9,12,22,.88);
+    padding:14px 18px;
+    background:rgba(8,10,18,.88);
     backdrop-filter:blur(18px);
-    border-bottom:1px solid rgba(120,130,255,.15);
+    border-bottom:1px solid rgba(120,130,255,.12);
 }
 
 .header-inner{
@@ -59,36 +66,38 @@ header{
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:15px;
 }
 
 .logo{
-    font-size:25px;
+    font-size:26px;
     font-weight:900;
     letter-spacing:2px;
-    background:linear-gradient(90deg,#5f8cff,#9c55ff);
+    background:linear-gradient(90deg,#6c8cff,#a05cff);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
 }
 
 .beta{
-    font-size:10px;
-    padding:4px 7px;
-    border-radius:8px;
-    background:rgba(100,100,255,.15);
-    color:#9aa9ff;
-    margin-left:5px;
+    display:inline-block;
     vertical-align:middle;
+    margin-left:5px;
+    padding:5px 8px;
+    border-radius:8px;
+    font-size:10px;
+    letter-spacing:1px;
+    background:rgba(100,80,255,.13);
+    color:#a58cff;
+    -webkit-text-fill-color:#a58cff;
 }
 
 .menu-btn{
+    width:45px;
+    height:45px;
     border:0;
-    background:rgba(255,255,255,.07);
+    border-radius:14px;
+    background:rgba(255,255,255,.06);
     color:white;
-    font-size:22px;
-    width:43px;
-    height:43px;
-    border-radius:12px;
+    font-size:25px;
     cursor:pointer;
 }
 
@@ -98,65 +107,11 @@ header{
 
 /* SIDE MENU */
 
-.side-menu{
-    position:fixed;
-    top:0;
-    right:-310px;
-    width:290px;
-    height:100vh;
-    z-index:2000;
-    background:rgba(10,13,25,.97);
-    backdrop-filter:blur(20px);
-    border-left:1px solid rgba(100,120,255,.2);
-    padding:25px 18px;
-    transition:.35s ease;
-    box-shadow:-15px 0 50px rgba(0,0,0,.4);
-}
-
-.side-menu.active{
-    right:0;
-}
-
-.side-title{
-    font-size:22px;
-    font-weight:bold;
-    margin-bottom:25px;
-}
-
-.side-item{
-    width:100%;
-    border:0;
-    padding:14px;
-    margin-bottom:9px;
-    border-radius:12px;
-    color:#ddd;
-    background:rgba(255,255,255,.05);
-    text-align:left;
-    cursor:pointer;
-    font-size:15px;
-}
-
-.side-item:hover{
-    background:rgba(91,100,255,.2);
-    color:white;
-}
-
-.close-menu{
-    position:absolute;
-    right:18px;
-    top:17px;
-    border:0;
-    background:none;
-    color:white;
-    font-size:25px;
-    cursor:pointer;
-}
-
 .overlay{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.55);
     z-index:1500;
+    background:rgba(0,0,0,.55);
     display:none;
 }
 
@@ -164,12 +119,68 @@ header{
     display:block;
 }
 
+.side-menu{
+    position:fixed;
+    right:-310px;
+    top:0;
+    z-index:2000;
+    width:290px;
+    height:100vh;
+    padding:25px 18px;
+    background:rgba(9,12,23,.98);
+    backdrop-filter:blur(20px);
+    border-left:1px solid rgba(110,120,255,.15);
+    transition:.35s ease;
+    box-shadow:-20px 0 50px rgba(0,0,0,.4);
+}
+
+.side-menu.active{
+    right:0;
+}
+
+.side-title{
+    margin:8px 0 25px;
+    font-size:22px;
+    font-weight:bold;
+    color:#8797ff;
+}
+
+.close-menu{
+    position:absolute;
+    right:18px;
+    top:15px;
+    border:0;
+    background:none;
+    color:white;
+    font-size:28px;
+    cursor:pointer;
+}
+
+.side-item{
+    display:block;
+    width:100%;
+    margin-bottom:9px;
+    padding:14px;
+    border:1px solid rgba(120,130,255,.08);
+    border-radius:12px;
+    background:rgba(255,255,255,.045);
+    color:#c5c9d6;
+    text-align:left;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.side-item:hover{
+    background:rgba(90,100,255,.16);
+    color:white;
+}
+
 /* MAIN */
 
 main{
     max-width:1200px;
     margin:auto;
-    padding:25px 18px 60px;
+    padding:22px 16px 60px;
 }
 
 /* HERO */
@@ -177,55 +188,64 @@ main{
 .hero{
     position:relative;
     overflow:hidden;
-    border-radius:25px;
+    min-height:215px;
     padding:32px 25px;
     margin-bottom:25px;
+    border-radius:25px;
+    border:1px solid rgba(105,120,255,.16);
     background:
-        radial-gradient(circle at 80% 30%, rgba(100,80,255,.35), transparent 35%),
-        linear-gradient(135deg,#111a38,#121124);
-    border:1px solid rgba(110,120,255,.18);
-    box-shadow:0 15px 50px rgba(0,0,0,.25);
+        radial-gradient(circle at 85% 25%,rgba(100,60,255,.3),transparent 30%),
+        radial-gradient(circle at 55% 100%,rgba(40,80,255,.14),transparent 40%),
+        linear-gradient(135deg,#111a38,#121326);
+    box-shadow:0 15px 55px rgba(0,0,0,.25);
 }
 
-.hero::after{
+.hero::before{
     content:"";
     position:absolute;
-    width:180px;
-    height:180px;
-    right:-70px;
-    top:-70px;
-    border:1px solid rgba(120,130,255,.25);
+    width:240px;
+    height:240px;
+    right:-100px;
+    top:-100px;
+    border:1px solid rgba(120,130,255,.16);
     border-radius:50%;
     box-shadow:
-        0 0 0 25px rgba(100,100,255,.04),
-        0 0 0 50px rgba(100,100,255,.03);
+        0 0 0 25px rgba(100,100,255,.035),
+        0 0 0 55px rgba(100,100,255,.025);
 }
 
 .hero h1{
-    font-size:32px;
-    margin-bottom:8px;
+    position:relative;
+    z-index:2;
+    font-size:34px;
+    margin-bottom:10px;
 }
 
 .hero h1 span{
-    color:#7890ff;
+    color:#7893ff;
 }
 
 .hero p{
+    position:relative;
+    z-index:2;
+    max-width:700px;
     color:#9da5bb;
-    line-height:1.6;
-    max-width:650px;
+    line-height:1.65;
+    font-size:16px;
 }
 
 .status{
+    position:relative;
+    z-index:2;
     display:inline-flex;
     align-items:center;
     gap:7px;
     margin-top:17px;
-    padding:7px 11px;
+    padding:8px 12px;
     border-radius:20px;
-    background:rgba(55,220,130,.08);
-    border:1px solid rgba(55,220,130,.15);
-    color:#6ce6a1;
+    background:rgba(50,220,125,.07);
+    border:1px solid rgba(50,220,125,.13);
+    color:#6de4a0;
     font-size:12px;
 }
 
@@ -233,21 +253,31 @@ main{
     width:7px;
     height:7px;
     border-radius:50%;
-    background:#48e58c;
-    box-shadow:0 0 10px #48e58c;
+    background:#45e48a;
+    box-shadow:0 0 12px #45e48a;
 }
 
 /* SEARCH */
 
 .search-box{
     position:relative;
-    margin-bottom:22px;
+    margin-bottom:18px;
+}
+
+.search-icon{
+    position:absolute;
+    left:17px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#7d87a0;
+    font-size:19px;
+    pointer-events:none;
 }
 
 .search-box input{
     width:100%;
     padding:16px 18px 16px 48px;
-    border:1px solid rgba(120,130,255,.15);
+    border:1px solid rgba(120,130,255,.12);
     border-radius:16px;
     outline:none;
     background:rgba(255,255,255,.045);
@@ -257,20 +287,12 @@ main{
 }
 
 .search-box input:focus{
-    border-color:#687cff;
+    border-color:#667aff;
     box-shadow:0 0 25px rgba(90,100,255,.12);
 }
 
 .search-box input::placeholder{
-    color:#777f94;
-}
-
-.search-icon{
-    position:absolute;
-    left:17px;
-    top:50%;
-    transform:translateY(-50%);
-    color:#7e89aa;
+    color:#737b91;
 }
 
 /* CATEGORY */
@@ -279,8 +301,8 @@ main{
     display:flex;
     gap:9px;
     overflow-x:auto;
-    padding-bottom:5px;
-    margin-bottom:27px;
+    padding-bottom:8px;
+    margin-bottom:25px;
     scrollbar-width:none;
 }
 
@@ -290,24 +312,28 @@ main{
 
 .category-btn{
     flex-shrink:0;
-    border:1px solid rgba(120,130,255,.12);
+    padding:11px 16px;
+    border:1px solid rgba(120,130,255,.11);
+    border-radius:14px;
     background:rgba(255,255,255,.045);
-    color:#aeb5c9;
-    padding:10px 15px;
-    border-radius:13px;
+    color:#aeb4c7;
     cursor:pointer;
     transition:.2s;
+    font-size:14px;
 }
 
-.category-btn.active,
-.category-btn:hover{
-    background:linear-gradient(135deg,#526cff,#864fff);
+.category-btn.active{
+    background:linear-gradient(135deg,#536dff,#814cff);
     color:white;
     border-color:transparent;
-    box-shadow:0 7px 22px rgba(84,82,255,.2);
+    box-shadow:0 8px 25px rgba(80,80,255,.2);
 }
 
-/* SECTION TITLE */
+.category-btn:hover{
+    color:white;
+}
+
+/* SECTION */
 
 .section-head{
     display:flex;
@@ -321,7 +347,7 @@ main{
 }
 
 .file-count{
-    color:#747d96;
+    color:#687189;
     font-size:12px;
 }
 
@@ -336,37 +362,51 @@ main{
 .card{
     position:relative;
     overflow:hidden;
+    padding:15px;
+    border-radius:18px;
     border:1px solid rgba(120,130,255,.1);
     background:rgba(255,255,255,.035);
-    border-radius:18px;
-    padding:15px;
     transition:.25s;
+}
+
+.card::before{
+    content:"";
+    position:absolute;
+    width:100px;
+    height:100px;
+    right:-50px;
+    top:-50px;
+    background:rgba(90,100,255,.07);
+    border-radius:50%;
+    filter:blur(10px);
 }
 
 .card:hover{
     transform:translateY(-4px);
-    border-color:rgba(110,120,255,.35);
+    border-color:rgba(110,120,255,.3);
     background:rgba(255,255,255,.055);
-    box-shadow:0 15px 35px rgba(0,0,0,.2);
+    box-shadow:0 15px 35px rgba(0,0,0,.25);
 }
 
 .card-top{
+    position:relative;
+    z-index:2;
     display:flex;
     gap:12px;
     align-items:center;
 }
 
 .file-icon{
-    width:52px;
-    height:52px;
+    width:55px;
+    height:55px;
     flex-shrink:0;
-    border-radius:14px;
-    overflow:hidden;
     display:flex;
     align-items:center;
     justify-content:center;
+    overflow:hidden;
+    border-radius:14px;
+    border:1px solid rgba(120,130,255,.14);
     background:linear-gradient(135deg,#202a56,#17182d);
-    border:1px solid rgba(120,130,255,.15);
     font-size:25px;
 }
 
@@ -390,38 +430,42 @@ main{
 .file-type{
     display:inline-block;
     margin-top:5px;
-    padding:3px 7px;
+    padding:4px 7px;
     border-radius:6px;
+    background:rgba(100,110,255,.1);
+    color:#9daaff;
     font-size:9px;
     font-weight:bold;
-    color:#aeb8ff;
-    background:rgba(100,110,255,.1);
 }
 
 .card-category{
-    margin-top:14px;
+    position:relative;
+    z-index:2;
+    margin-top:13px;
+    color:#727b91;
     font-size:11px;
-    color:#737d95;
 }
 
 .download-btn{
+    position:relative;
+    z-index:2;
     display:block;
     width:100%;
-    text-align:center;
     margin-top:13px;
     padding:11px;
     border-radius:11px;
-    text-decoration:none;
+    background:linear-gradient(135deg,#4f69ff,#7948ed);
     color:white;
+    text-align:center;
+    text-decoration:none;
     font-size:13px;
     font-weight:bold;
-    background:linear-gradient(135deg,#4d68ff,#7a45ef);
     transition:.2s;
 }
 
 .download-btn:hover{
     filter:brightness(1.12);
-    box-shadow:0 8px 20px rgba(90,70,255,.2);
+    box-shadow:0 8px 22px rgba(80,70,255,.2);
 }
 
 .download-btn:active{
@@ -431,11 +475,11 @@ main{
 /* EMPTY */
 
 .empty{
-    text-align:center;
     padding:50px 20px;
-    color:#737b91;
     border:1px dashed rgba(120,130,255,.15);
     border-radius:18px;
+    text-align:center;
+    color:#737c91;
 }
 
 /* REPORT */
@@ -443,8 +487,8 @@ main{
 .report{
     padding:25px;
     border-radius:20px;
-    background:linear-gradient(135deg,rgba(255,90,90,.08),rgba(255,160,70,.04));
     border:1px solid rgba(255,100,100,.12);
+    background:linear-gradient(135deg,rgba(255,90,90,.08),rgba(255,160,70,.03));
 }
 
 .report h2{
@@ -460,9 +504,9 @@ main{
     display:inline-block;
     margin-top:17px;
     padding:12px 18px;
+    border-radius:11px;
     background:#20b95c;
     color:white;
-    border-radius:11px;
     text-decoration:none;
     font-weight:bold;
 }
@@ -470,44 +514,52 @@ main{
 /* FOOTER */
 
 footer{
+    padding:30px 15px 40px;
     text-align:center;
-    padding:25px 15px 35px;
-    color:#60687c;
+    color:#5f677b;
     font-size:12px;
 }
 
 footer strong{
-    color:#8c96ff;
+    color:#8b97ff;
 }
 
 /* MOBILE */
 
 @media(max-width:850px){
+
     .file-grid{
         grid-template-columns:repeat(2,1fr);
     }
+
 }
 
 @media(max-width:560px){
+
     header{
-        padding:13px 15px;
+        padding:13px 14px;
     }
 
     .logo{
-        font-size:21px;
+        font-size:22px;
     }
 
     main{
-        padding:18px 13px 45px;
+        padding:18px 10px 45px;
     }
 
     .hero{
-        padding:25px 19px;
-        border-radius:21px;
+        min-height:215px;
+        padding:27px 20px;
+        border-radius:22px;
     }
 
     .hero h1{
-        font-size:27px;
+        font-size:28px;
+    }
+
+    .hero p{
+        font-size:15px;
     }
 
     .file-grid{
@@ -517,6 +569,7 @@ footer strong{
     .card{
         padding:14px;
     }
+
 }
 </style>
 </head>
@@ -563,6 +616,7 @@ footer strong{
 
 </div>
 
+
 <!-- HEADER -->
 
 <header>
@@ -570,7 +624,8 @@ footer strong{
     <div class="header-inner">
 
         <div class="logo">
-            EDO WEB <span class="beta">BETA</span>
+            EDO WEB
+            <span class="beta">BETA</span>
         </div>
 
         <button class="menu-btn" onclick="openMenu()">
@@ -580,6 +635,7 @@ footer strong{
     </div>
 
 </header>
+
 
 <!-- MAIN -->
 
@@ -605,6 +661,7 @@ footer strong{
 
     </section>
 
+
     <!-- SEARCH -->
 
     <div class="search-box">
@@ -612,473 +669,491 @@ footer strong{
         <span class="search-icon">🔎</span>
 
         <input
-            type="text"
             id="searchInput"
+            type="text"
             placeholder="Cari add-on, map, texture, APK..."
             oninput="searchFiles()"
         >
 
     </div>
 
+
     <!-- CATEGORY -->
 
     <div class="category-scroll">
 
         <button
-            class="category-btn active"
             id="cat-home"
+            class="category-btn active"
             onclick="showCategory('home')">
             🏠 Beranda
         </button>
 
         <button
-            class="category-btn"
             id="cat-addon"
+            class="category-btn"
             onclick="showCategory('addon')">
             🧩 Add-ons
         </button>
 
         <button
-            class="category-btn"
             id="cat-map"
+            class="category-btn"
             onclick="showCategory('map')">
             🗺️ Map
         </button>
 
         <button
-            class="category-btn"
             id="cat-texture"
+            class="category-btn"
             onclick="showCategory('texture')">
             🎨 Texture Pack
         </button>
 
         <button
-            class="category-btn"
             id="cat-apk"
+            class="category-btn"
             onclick="showCategory('apk')">
             📱 APK & Client
         </button>
 
         <button
-            class="category-btn"
             id="cat-script"
+            class="category-btn"
             onclick="showCategory('script')">
             📜 Script
         </button>
 
         <button
-            class="category-btn"
             id="cat-report"
+            class="category-btn"
             onclick="showReport()">
             ⚠️ Laporan
         </button>
 
     </div>
 
-    <!-- CONTENT -->
+
+    <!-- FILE CONTENT -->
 
     <div id="content"></div>
 
 </main>
 
+
 <!-- FOOTER -->
 
 <footer>
-    <strong>EDO Web (Beta)</strong><br>
+
+    <strong>EDO Web (Beta)</strong>
+
+    <br>
+
     Minecraft Bedrock Hub • Made by EDO
+
 </footer>
+
 
 <script>
 
-/* =========================================
-   DATABASE 48 FILE
-========================================= */
+/* =====================================================
+   DATABASE
+===================================================== */
 
 const files = [
 
-    {
-        name:"Jenny Mod",
-        type:"MCADDON",
-        category:"addon",
-        url:"https://www.MediaFire.com/file/aw2ewd62oc037eb/jenny-miside-26.30plus.mcaddon/file"
-    },
+{
+name:"Jenny Mod",
+type:"MCADDON",
+category:"addon",
+url:"https://www.MediaFire.com/file/aw2ewd62oc037eb/jenny-miside-26.30plus.mcaddon/file"
+},
 
-    {
-        name:"Levi Launcher",
-        type:"APK",
-        category:"apk",
-        url:"https://github.com/LiteLDev/LeviLaunchroid/releases/download/v1.5.25/LeviLauncher-v1.5.25-release.apk"
-    },
+{
+name:"Levi Launcher",
+type:"APK",
+category:"apk",
+url:"https://github.com/LiteLDev/LeviLaunchroid/releases/download/v1.5.25/LeviLauncher-v1.5.25-release.apk"
+},
 
-    {
-        name:"Action & Stuff 1.11",
-        type:"MCPACK",
-        category:"texture",
-        url:"https://sfile.co/kjmkVWOwa6A"
-    },
+{
+name:"Action & Stuff 1.11",
+type:"MCPACK",
+category:"texture",
+url:"https://sfile.co/kjmkVWOwa6A"
+},
 
-    {
-        name:"Ambatukam Creeper",
-        type:"MCPACK ZIP",
-        category:"addon",
-        url:"https://www.mediafire.com/file/4j6vsz9gko1hhzr/ambatukam_creeper%2Bby%2BDaanzMc.mcpack.zip.file"
-    },
+{
+name:"Ambatukam Creeper",
+type:"MCPACK ZIP",
+category:"addon",
+url:"https://www.mediafire.com/file/4j6vsz9gko1hhzr/ambatukam_creeper%2Bby%2BDaanzMc.mcpack.zip.file"
+},
 
-    {
-        name:"Epic Kill Animation",
-        type:"MCADDON",
-        category:"addon",
-        url:"https://www.mediafire.com/file/ig9mgi64anrlw7v/Epic%2BKill%2BAnimation%2Bby%2BSwordblaze.mcaddon/file"
-    },
+{
+name:"Epic Kill Animation",
+type:"MCADDON",
+category:"addon",
+url:"https://www.mediafire.com/file/ig9mgi64anrlw7v/Epic%2BKill%2BAnimation%2Bby%2BSwordblaze.mcaddon/file"
+},
 
-    {
-        name:"ZXKO 4.0 Release",
-        type:"APK",
-        category:"apk",
-        url:"https://www.mediafire.com/file/w58wa8odcxi86zs/zxko-4.0-release.apk/file"
-    },
+{
+name:"ZXKO 4.0 Release",
+type:"APK",
+category:"apk",
+url:"https://www.mediafire.com/file/w58wa8odcxi86zs/zxko-4.0-release.apk/file"
+},
 
-    {
-        name:"Map Kampungku V2",
-        type:"MCWORLD",
-        category:"map",
-        url:"https://www.mediafire.com/file/jvf0y0sgoo2lrzy/map%2Bkampungku%2Bv2.cworld/file"
-    },
+{
+name:"Map Kampungku V2",
+type:"MCWORLD",
+category:"map",
+url:"https://www.mediafire.com/file/jvf0y0sgoo2lrzy/map%2Bkampungku%2Bv2.cworld/file"
+},
 
-    {
-        name:"Better Village",
-        type:"MCTEMPLATE",
-        category:"map",
-        url:"https://www.mediafire.com/file/8sokktrscem5gey/Better_Village.mctemplate/file"
-    },
+{
+name:"Better Village",
+type:"MCTEMPLATE",
+category:"map",
+url:"https://www.mediafire.com/file/8sokktrscem5gey/Better_Village.mctemplate/file"
+},
 
-    {
-        name:"No Spear Cooldown",
-        type:"SCRIPT",
-        category:"script",
-        url:"https://www.curseforge.com/minecraft-bedrock/scripts/no-spear-cooldown/download/8329314"
-    },
+{
+name:"No Spear Cooldown",
+type:"SCRIPT",
+category:"script",
+url:"https://www.curseforge.com/minecraft-bedrock/scripts/no-spear-cooldown/download/8329314"
+},
 
-    {
-        name:"Xnova Remastered",
-        type:"MCPACK",
-        category:"texture",
-        icon:"https://media.forgecdn.net/avatars/thumbnails/1945/218/256/256/639207005593581557.png",
-        url:"https://www.curseforge.com/minecraft-bedrock/texture-packs/xnova-remastered"
-    },
+{
+name:"Xnova Remastered",
+type:"MCPACK",
+category:"texture",
+icon:"https://media.forgecdn.net/avatars/thumbnails/1945/218/256/256/639207005593581557.png",
+url:"https://www.curseforge.com/minecraft-bedrock/texture-packs/xnova-remastered"
+},
 
-    {
-        name:"Better Biomes",
-        type:"MCADDON",
-        category:"addon",
-        icon:"https://media.forgecdn.net/avatars/thumbnails/1972/207/256/256/639218162352831295.png",
-        url:"https://www.curseforge.com/minecraft-bedrock/addons/better-biomes-addon-mrstrader"
-    },
+{
+name:"Better Biomes",
+type:"MCADDON",
+category:"addon",
+icon:"https://media.forgecdn.net/avatars/thumbnails/1972/207/256/256/639218162352831295.png",
+url:"https://www.curseforge.com/minecraft-bedrock/addons/better-biomes-addon-mrstrader"
+},
 
-    {
-        name:"GUI Revision",
-        type:"MCPACK",
-        category:"texture",
-        icon:"https://media.forgecdn.net/avatars/thumbnails/1448/589/256/256/638939821241111792.png",
-        url:"https://www.curseforge.com/minecraft-bedrock/texture-packs/gui-revision"
-    },
+{
+name:"GUI Revision",
+type:"MCPACK",
+category:"texture",
+icon:"https://media.forgecdn.net/avatars/thumbnails/1448/589/256/256/638939821241111792.png",
+url:"https://www.curseforge.com/minecraft-bedrock/texture-packs/gui-revision"
+},
 
-    {
-        name:"Azek+++",
-        type:"MCPACK",
-        category:"texture",
-        icon:"https://media.forgecdn.net/avatars/thumbnails/2026/543/256/256/639241207148917719.png",
-        url:"https://www.curseforge.com/minecraft-bedrock/texture-packs/azek"
-    },
+{
+name:"Azek+++",
+type:"MCPACK",
+category:"texture",
+icon:"https://media.forgecdn.net/avatars/thumbnails/2026/543/256/256/639241207148917719.png",
+url:"https://www.curseforge.com/minecraft-bedrock/texture-packs/azek"
+},
 
-    {
-        name:"[Why Not] Trailing Trails",
-        type:"MCADDON",
-        category:"addon",
-        icon:"https://media.forgecdn.net/avatars/thumbnails/1834/920/256/256/639157343694822575.png",
-        url:"https://www.curseforge.com/minecraft-bedrock/addons/why-not-trailing-trails"
-    },
+{
+name:"[Why Not] Trailing Trails",
+type:"MCADDON",
+category:"addon",
+icon:"https://media.forgecdn.net/avatars/thumbnails/1834/920/256/256/639157343694822575.png",
+url:"https://www.curseforge.com/minecraft-bedrock/addons/why-not-trailing-trails"
+},
 
-    {
-        name:"DoubleHands",
-        type:"MCPACK",
-        category:"addon",
-        icon:"https://media.forgecdn.net/avatars/thumbnails/2003/225/256/256/639231194999007815.png",
-        url:"https://www.curseforge.com/minecraft-bedrock/addons/doublehands"
-    },
+{
+name:"DoubleHands",
+type:"MCPACK",
+category:"addon",
+icon:"https://media.forgecdn.net/avatars/thumbnails/2003/225/256/256/639231194999007815.png",
+url:"https://www.curseforge.com/minecraft-bedrock/addons/doublehands"
+},
 
-    {
-        name:"Automatic Enchantments",
-        type:"MCPACK",
-        category:"addon",
-        icon:"https://media.forgecdn.net/avatars/thumbnails/1920/847/256/256/639196927015243147.png",
-        url:"https://www.curseforge.com/minecraft-bedrock/addons/automatic-enchantments-achievements-friendly"
-    },
+{
+name:"Automatic Enchantments",
+type:"MCPACK",
+category:"addon",
+icon:"https://media.forgecdn.net/avatars/thumbnails/1920/847/256/256/639196927015243147.png",
+url:"https://www.curseforge.com/minecraft-bedrock/addons/automatic-enchantments-achievements-friendly"
+},
 
-    {
-        name:"Simple Shine Ore",
-        type:"MCPACK",
-        category:"texture",
-        icon:"https://media.forgecdn.net/avatars/thumbnails/1993/540/256/256/639227203400809389.png",
-        url:"https://www.curseforge.com/minecraft-bedrock/texture-packs/simple-shine-ore"
-    },
+{
+name:"Simple Shine Ore",
+type:"MCPACK",
+category:"texture",
+icon:"https://media.forgecdn.net/avatars/thumbnails/1993/540/256/256/639227203400809389.png",
+url:"https://www.curseforge.com/minecraft-bedrock/texture-packs/simple-shine-ore"
+},
 
-    {
-        name:"PatPat",
-        type:"MCADDON",
-        category:"addon",
-        icon:"https://media.forgecdn.net/attachments/1956/19/recording_pat-webp.webp",
-        url:"https://mcpedl.com/patpat"
-    },
+{
+name:"PatPat",
+type:"MCADDON",
+category:"addon",
+icon:"https://media.forgecdn.net/attachments/1956/19/recording_pat-webp.webp",
+url:"https://mcpedl.com/patpat"
+},
 
-    {
-        name:"Real Ragdoll",
-        type:"MCADDON",
-        category:"addon",
-        icon:"https://media.forgecdn.net/attachments/1873/527/realrag-png.png",
-        url:"https://mcpedl.com/real-ragdoll"
-    },
+{
+name:"Real Ragdoll",
+type:"MCADDON",
+category:"addon",
+icon:"https://media.forgecdn.net/attachments/1873/527/realrag-png.png",
+url:"https://mcpedl.com/real-ragdoll"
+},
 
-    {
-        name:"Flarial Client",
-        type:"CLIENT",
-        category:"apk",
-        icon:"https://flarial.xyz/flarial-client-embed.png",
-        url:"https://flarial.xyz"
-    },
+{
+name:"Flarial Client",
+type:"CLIENT",
+category:"apk",
+icon:"https://flarial.xyz/flarial-client-embed.png",
+url:"https://flarial.xyz"
+},
 
-    {
-        name:"Atlas Client",
-        type:"CLIENT",
-        category:"apk",
-        icon:"https://play-lh.googleusercontent.com/4EaKtUETXykPBPRyDLCp-3q9OwqhYU4Yw1fVR1dj7dQyfMdRDFTShaCjix2H3it7ufhpIyiVlvESZxIFDs-n=s256",
-        url:"https://play.google.com/store/apps/details?id=net.atlasclient.atlaspe"
-    },
+{
+name:"Atlas Client",
+type:"CLIENT",
+category:"apk",
+icon:"https://play-lh.googleusercontent.com/4EaKtUETXykPBPRyDLCp-3q9OwqhYU4Yw1fVR1dj7dQyfMdRDFTShaCjix2H3it7ufhpIyiVlvESZxIFDs-n=s256",
+url:"https://play.google.com/store/apps/details?id=net.atlasclient.atlaspe"
+},
 
-    {
-        name:"EWM 2.0.3",
-        type:"MCADDON",
-        category:"addon",
-        url:"https://www.mediafire.com/file/rfitnmh96vf461n/EWM_2.0.3.mcaddon/file?dkey=43dgfeb0kjo&r=1880"
-    },
+{
+name:"EWM 2.0.3",
+type:"MCADDON",
+category:"addon",
+url:"https://www.mediafire.com/file/rfitnmh96vf461n/EWM_2.0.3.mcaddon/file?dkey=43dgfeb0kjo&r=1880"
+},
 
-    {
-        name:"Better First Person",
-        type:"MCADDON",
-        category:"addon",
-        url:"https://www.mediafire.com/file/70n681deikyh619/Better%20First%20Person%20(New%20Upsate).mcaddon/file?dkey=h42zeifrbgg&r=1840"
-    },
+{
+name:"Better First Person",
+type:"MCADDON",
+category:"addon",
+url:"https://www.mediafire.com/file/70n681deikyh619/Better%20First%20Person%20(New%20Upsate).mcaddon/file?dkey=h42zeifrbgg&r=1840"
+},
 
-    {
-        name:"Lush Meadows v1.1.0",
-        type:"MCADDON",
-        category:"addon",
-        url:"https://www.mediafire.com/file/yoc8bcoyzuu5rlv/LushMeadows_v1.1.0_RELEASE.mcaddon/file?dkey=7dydbdchbmt&r=288"
-    },
+{
+name:"Lush Meadows v1.1.0",
+type:"MCADDON",
+category:"addon",
+url:"https://www.mediafire.com/file/yoc8bcoyzuu5rlv/LushMeadows_v1.1.0_RELEASE.mcaddon/file?dkey=7dydbdchbmt&r=288"
+},
 
-    {
-        name:"Nambah Tangan Samurai",
-        type:"MCPACK",
-        category:"texture",
-        url:"https://www.mediafire.com/file/31qjjb6eph74g22/NambahTanganSamurai.mcpack/file?dkey=qu5dp73mzqx&r=774"
-    },
+{
+name:"Nambah Tangan Samurai",
+type:"MCPACK",
+category:"texture",
+url:"https://www.mediafire.com/file/31qjjb6eph74g22/NambahTanganSamurai.mcpack/file?dkey=qu5dp73mzqx&r=774"
+},
 
-    {
-        name:"Effortless Building v1.5",
-        type:"MCADDON",
-        category:"addon",
-        url:"https://www.mediafire.com/file/3c2rgemmxr5iwth/Effortless_Building_By_RyzXID.v1.5.mcaddon/file"
-    },
+{
+name:"Effortless Building v1.5",
+type:"MCADDON",
+category:"addon",
+url:"https://www.mediafire.com/file/3c2rgemmxr5iwth/Effortless_Building_By_RyzXID.v1.5.mcaddon/file"
+},
 
-    {
-        name:"AFK Cinematic Camera v1.0.3",
-        type:"MCADDON",
-        category:"addon",
-        url:"https://www.mediafire.com/file/twnm85t2uhqxpc2/AFK_Cinematic_Camera_By_RyzXID.v1.0.3.mcaddon.zip/file"
-    },
+{
+name:"AFK Cinematic Camera v1.0.3",
+type:"MCADDON",
+category:"addon",
+url:"https://www.mediafire.com/file/twnm85t2uhqxpc2/AFK_Cinematic_Camera_By_RyzXID.v1.0.3.mcaddon.zip/file"
+},
 
-    {
-        name:"HappyGhast Speed Boost X3",
-        type:"MCADDON",
-        category:"addon",
-        url:"https://www.mediafire.com/file/juzq83oa5g7gfq6/HappyGhastSpeedBoostX3_By_RyzXID..mcaddon.zip/file"
-    },
+{
+name:"HappyGhast Speed Boost X3",
+type:"MCADDON",
+category:"addon",
+url:"https://www.mediafire.com/file/juzq83oa5g7gfq6/HappyGhastSpeedBoostX3_By_RyzXID..mcaddon.zip/file"
+},
 
-    {
-        name:"RG Shader v2.1 (RenderDragon)",
-        type:"MCPACK",
-        category:"texture",
-        url:"https://www.curseforge.com/minecraft-bedrock/texture-packs/rg-shader-v2-1-renderdragon-support-2/files/8787543"
-    },
+{
+name:"RG Shader v2.1 (RenderDragon)",
+type:"MCPACK",
+category:"texture",
+url:"https://www.curseforge.com/minecraft-bedrock/texture-packs/rg-shader-v2-1-renderdragon-support-2/files/8787543"
+},
 
-    {
-        name:"Minecraft Patch 1.26.45.1",
-        type:"APK",
-        category:"apk",
-        url:"https://www.mediafire.com/file/5fx5j1qzchvidgy/Minecraft_Patch_1.26.45.1.apk/file"
-    },
+{
+name:"Minecraft Patch 1.26.45.1",
+type:"APK",
+category:"apk",
+url:"https://www.mediafire.com/file/5fx5j1qzchvidgy/Minecraft_Patch_1.26.45.1.apk/file"
+},
 
-    {
-        name:"Transparent UI Pack",
-        type:"MCPACK",
-        category:"texture",
-        url:"https://mcpedl.com/trans-ui-pack/#downloads"
-    },
+{
+name:"Transparent UI Pack",
+type:"MCPACK",
+category:"texture",
+url:"https://mcpedl.com/trans-ui-pack/#downloads"
+},
 
-    {
-        name:"Fresh Animations",
-        type:"MCPACK",
-        category:"texture",
-        url:"https://www.curseforge.com/minecraft/texture-packs/fresh-animations/files/7854681"
-    },
+{
+name:"Fresh Animations",
+type:"MCPACK",
+category:"texture",
+url:"https://www.curseforge.com/minecraft/texture-packs/fresh-animations/files/7854681"
+},
 
-    {
-        name:"Villager News 1.0 Add-On",
-        type:"MCADDON",
-        category:"addon",
-        url:"https://www.mediafire.com/file/hw2cs2d2ike6k77/Villager_News_1.0_Add-On_%2528addon%2529.mcaddon/file"
-    },
+{
+name:"Villager News 1.0 Add-On",
+type:"MCADDON",
+category:"addon",
+url:"https://www.mediafire.com/file/hw2cs2d2ike6k77/Villager_News_1.0_Add-On_%2528addon%2529.mcaddon/file"
+},
 
-    {
-        name:"Waypoints Add-On",
-        type:"MCADDON",
-        category:"addon",
-        url:"https://www.mediafire.com/file/gia15z4gn91x6xb/Waypoints_Add-On_%2528addon%2529.mcaddon/file"
-    },
+{
+name:"Waypoints Add-On",
+type:"MCADDON",
+category:"addon",
+url:"https://www.mediafire.com/file/gia15z4gn91x6xb/Waypoints_Add-On_%2528addon%2529.mcaddon/file"
+},
 
-    {
-        name:"ReplayDirector RepeatPlayFix",
-        type:"MCADDON",
-        category:"addon",
-        url:"https://www.mediafire.com/file/hhrtu4d75u8aqcz/ReplayDirector_RepeatPlayFix.mcaddon/file"
-    },
+{
+name:"ReplayDirector RepeatPlayFix",
+type:"MCADDON",
+category:"addon",
+url:"https://www.mediafire.com/file/hhrtu4d75u8aqcz/ReplayDirector_RepeatPlayFix.mcaddon/file"
+},
 
-    {
-        name:"Monster School Map",
-        type:"MCWORLD",
-        category:"map",
-        url:"https://www.mediafire.com/file/xud4m62mh8nzple/MP+Monster+School+Map+Update.mcworld/file"
-    },
+{
+name:"Monster School Map",
+type:"MCWORLD",
+category:"map",
+url:"https://www.mediafire.com/file/xud4m62mh8nzple/MP+Monster+School+Map+Update.mcworld/file"
+},
 
-    {
-        name:"Complementary Unbound Clouds",
-        type:"MCPACK",
-        category:"texture",
-        url:"https://www.mediafire.com/file/wcqdzjp1khoouz5/MP+Complementary_Unbound_Clouds.mcpack/file"
-    },
+{
+name:"Complementary Unbound Clouds",
+type:"MCPACK",
+category:"texture",
+url:"https://www.mediafire.com/file/wcqdzjp1khoouz5/MP+Complementary_Unbound_Clouds.mcpack/file"
+},
 
-    {
-        name:"SpongeBob SquarePants",
-        type:"MCADDON",
-        category:"addon",
-        url:"https://www.mediafire.com/file/2jefkeb2l7f7crh/Spongebob_squarepants_by_kingRams.mcaddon/file"
-    },
+{
+name:"SpongeBob SquarePants",
+type:"MCADDON",
+category:"addon",
+url:"https://www.mediafire.com/file/2jefkeb2l7f7crh/Spongebob_squarepants_by_kingRams.mcaddon/file"
+},
 
-    {
-        name:"Xentium Utilities v1.4.5",
-        type:"MCADDON",
-        category:"addon",
-        url:"https://www.mediafire.com/file/vfd3ssid5tpqnx9/Xentium+Utilities+v1.4.5.mcaddon/file"
-    },
+{
+name:"Xentium Utilities v1.4.5",
+type:"MCADDON",
+category:"addon",
+url:"https://www.mediafire.com/file/vfd3ssid5tpqnx9/Xentium+Utilities+v1.4.5.mcaddon/file"
+},
 
-    {
-        name:"Lazy Legend Hitbox (Red)",
-        type:"MCPACK",
-        category:"texture",
-        url:"https://www.mediafire.com/file/hnmw9c74b5ivecb/MP+Lazy_Legend+Hitbox+(Red).mcpack/file"
-    },
+{
+name:"Lazy Legend Hitbox (Red)",
+type:"MCPACK",
+category:"texture",
+url:"https://www.mediafire.com/file/hnmw9c74b5ivecb/MP+Lazy_Legend+Hitbox+(Red).mcpack/file"
+},
 
-    {
-        name:"Better BossBars v1.5",
-        type:"MCPACK",
-        category:"texture",
-        url:"https://www.mediafire.com/file/w104p2v0wc74n1x/MP+Better+BossBars+v1.5.mcpack/file"
-    },
+{
+name:"Better BossBars v1.5",
+type:"MCPACK",
+category:"texture",
+url:"https://www.mediafire.com/file/w104p2v0wc74n1x/MP+Better_BossBars+v1.5.mcpack/file"
+},
 
-    {
-        name:"EdeyaWings",
-        type:"MCADDON",
-        category:"addon",
-        url:"https://www.mediafire.com/file/6clyz5zvktt2xxn/MP+EdeyaWings.mcaddon/file"
-    },
+{
+name:"EdeyaWings",
+type:"MCADDON",
+category:"addon",
+url:"https://www.mediafire.com/file/6clyz5zvktt2xxn/MP+EdeyaWings.mcaddon/file"
+},
 
-    {
-        name:"BareBones Recolors",
-        type:"MCPACK",
-        category:"texture",
-        url:"https://www.mediafire.com/file/nmksevt0zctcbcw/BareBones+Recolors.mcpack/file"
-    },
+{
+name:"BareBones Recolors",
+type:"MCPACK",
+category:"texture",
+url:"https://www.mediafire.com/file/nmksevt0zctcbcw/BareBones+Recolors.mcpack/file"
+},
 
-    {
-        name:"Tree Capitator v1",
-        type:"MCADDON",
-        category:"addon",
-        url:"https://www.mediafire.com/file/phimz0ego7km4nq/%E2%9C%A6+Tree+Capitator+%E2%9F%A6v1%E2%9F%A7+%2B+%E2%96%B8%E2%9F%A6ACHIEVEMENT+FRIENDLY%E2%9F%A7.mcaddon/file"
-    },
+{
+name:"Tree Capitator v1",
+type:"MCADDON",
+category:"addon",
+url:"https://www.mediafire.com/file/phimz0ego7km4nq/%E2%9C%A6+Tree+Capitator+%E2%9F%A6v1%E2%9F%A7+%2B+%E2%96%B8%E2%9F%A6ACHIEVEMENT+FRIENDLY%E2%9F%A7.mcaddon/file"
+},
 
-    {
-        name:"Instant Structures v7",
-        type:"MCADDON",
-        category:"addon",
-        url:"https://www.curseforge.com/minecraft-bedrock/addons/instant-structures-add-on/files"
-    },
+{
+name:"Instant Structures v7",
+type:"MCADDON",
+category:"addon",
+url:"https://www.curseforge.com/minecraft-bedrock/addons/instant-structures-add-on/files"
+},
 
-    {
-        name:"No Creepers (Removal)",
-        type:"SCRIPT",
-        category:"script",
-        url:"https://www.curseforge.com/minecraft-bedrock/scripts/no-creepers-creeper-removal/files"
-    },
+{
+name:"No Creepers (Removal)",
+type:"SCRIPT",
+category:"script",
+url:"https://www.curseforge.com/minecraft-bedrock/scripts/no-creepers-creeper-removal/files"
+},
 
-    {
-        name:"Item Physics +",
-        type:"MCADDON",
-        category:"addon",
-        url:"https://www.curseforge.com/minecraft-bedrock/addons/item-physics/files"
-    },
+{
+name:"Item Physics +",
+type:"MCADDON",
+category:"addon",
+url:"https://www.curseforge.com/minecraft-bedrock/addons/item-physics/files"
+},
 
-    {
-        name:"Angels & Demons Add-On",
-        type:"MCADDON",
-        category:"addon",
-        url:"https://www.mediafire.com/file/s1rizphvz69bihj/Angels_%26_Demons_Add-On.mcaddon/file"
-    }
+{
+name:"Angels & Demons Add-On",
+type:"MCADDON",
+category:"addon",
+url:"https://www.mediafire.com/file/s1rizphvz69bihj/Angels_%26_Demons_Add-On.mcaddon/file"
+}
 
 ];
 
-/* =========================================
-   ICON FALLBACK
-========================================= */
 
-function getEmoji(category){
+/* =====================================================
+   HELPERS
+===================================================== */
 
-    if(category === "addon") return "🧩";
-    if(category === "map") return "🗺️";
-    if(category === "texture") return "🎨";
-    if(category === "apk") return "📱";
-    if(category === "script") return "📜";
+function emoji(category){
+
+    if(category==="addon") return "🧩";
+    if(category==="map") return "🗺️";
+    if(category==="texture") return "🎨";
+    if(category==="apk") return "📱";
+    if(category==="script") return "📜";
 
     return "📦";
 }
 
-/* =========================================
-   CATEGORY NAME
-========================================= */
+function categoryName(category){
 
-function getCategoryName(category){
-
-    if(category === "addon") return "Add-on";
-    if(category === "map") return "Map";
-    if(category === "texture") return "Texture Pack";
-    if(category === "apk") return "APK & Client";
-    if(category === "script") return "Script";
+    if(category==="addon") return "Add-on";
+    if(category==="map") return "Map";
+    if(category==="texture") return "Texture Pack";
+    if(category==="apk") return "APK & Client";
+    if(category==="script") return "Script";
 
     return "File";
 }
 
-/* =========================================
-   OPEN MENU
-========================================= */
+function escapeHTML(text){
+
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+   MENU
+===================================================== */
 
 function openMenu(){
 
@@ -1094,22 +1169,25 @@ function closeMenu(){
 
 }
 
-/* =========================================
-   RENDER FILES
-========================================= */
 
-function renderFiles(list, title){
+/* =====================================================
+   RENDER
+===================================================== */
 
-    const content = document.getElementById("content");
+function renderFiles(list,title){
 
-    if(list.length === 0){
+    const content=document.getElementById("content");
 
-        content.innerHTML = `
+    if(!content) return;
+
+    if(!list || list.length===0){
+
+        content.innerHTML=`
             <div class="empty">
-                <div style="font-size:40px;margin-bottom:10px;">🔍</div>
+                <div style="font-size:42px;margin-bottom:10px;">🔍</div>
                 <h3>File tidak ditemukan</h3>
-                <p style="margin-top:7px;">
-                    Coba gunakan kata pencarian yang lain.
+                <p style="margin-top:8px;">
+                    Coba cari dengan kata lain.
                 </p>
             </div>
         `;
@@ -1117,7 +1195,7 @@ function renderFiles(list, title){
         return;
     }
 
-    let html = `
+    let html=`
 
         <div class="section-head">
 
@@ -1132,13 +1210,27 @@ function renderFiles(list, title){
         <div class="file-grid">
     `;
 
-    list.forEach(file => {
+    list.forEach((file,index)=>{
 
-        let icon = file.icon
-            ? `<img src="${file.icon}" alt="" onerror="this.parentElement.innerHTML='${getEmoji(file.category)}'">`
-            : getEmoji(file.category);
+        let icon;
 
-        html += `
+        if(file.icon){
+
+            icon=`
+                <img
+                    src="${file.icon}"
+                    alt=""
+                    onerror="this.style.display='none';this.parentElement.insertAdjacentText('beforeend','${emoji(file.category)}')"
+                >
+            `;
+
+        }else{
+
+            icon=emoji(file.category);
+
+        }
+
+        html+=`
 
             <div class="card">
 
@@ -1163,7 +1255,7 @@ function renderFiles(list, title){
                 </div>
 
                 <div class="card-category">
-                    ${getCategoryName(file.category)}
+                    ${categoryName(file.category)}
                 </div>
 
                 <a
@@ -1181,79 +1273,92 @@ function renderFiles(list, title){
 
     });
 
-    html += `</div>`;
+    html+=`</div>`;
 
-    content.innerHTML = html;
+    content.innerHTML=html;
 }
 
-/* =========================================
-   SHOW CATEGORY
-========================================= */
+
+/* =====================================================
+   CATEGORY
+===================================================== */
+
+function activateCategory(category){
+
+    document.querySelectorAll(".category-btn").forEach(btn=>{
+        btn.classList.remove("active");
+    });
+
+    const button=document.getElementById("cat-"+category);
+
+    if(button){
+        button.classList.add("active");
+    }
+}
 
 function showCategory(category){
 
-    document.getElementById("searchInput").value = "";
+    const search=document.getElementById("searchInput");
 
-    document.querySelectorAll(".category-btn").forEach(btn => {
-        btn.classList.remove("active");
-    });
-
-    const activeButton = document.getElementById("cat-" + category);
-
-    if(activeButton){
-        activeButton.classList.add("active");
+    if(search){
+        search.value="";
     }
 
-    if(category === "home"){
+    activateCategory(category);
 
-        const latest = files
-            .slice()
-            .reverse()
-            .slice(0, 5);
+    if(category==="home"){
 
-        renderFiles(latest, "🔥 File Terbaru");
+        /* LANGSUNG TAMPILKAN SEMUA FILE */
+        renderFiles(
+            files,
+            "🔥 Semua File"
+        );
 
         return;
     }
 
-    const filtered = files.filter(file => {
-        return file.category === category;
+    const result=files.filter(file=>{
+        return file.category===category;
     });
 
     renderFiles(
-        filtered,
-        getCategoryName(category)
+        result,
+        categoryName(category)
     );
 }
 
-/* =========================================
+
+/* =====================================================
    SEARCH
-========================================= */
+===================================================== */
 
 function searchFiles(){
 
-    const query = document
-        .getElementById("searchInput")
-        .value
+    const input=document.getElementById("searchInput");
+
+    if(!input) return;
+
+    const query=input.value
         .toLowerCase()
         .trim();
 
-    if(!query){
+    if(query===""){
 
         showCategory("home");
+
         return;
     }
 
-    document.querySelectorAll(".category-btn").forEach(btn => {
+    document.querySelectorAll(".category-btn").forEach(btn=>{
         btn.classList.remove("active");
     });
 
-    const result = files.filter(file => {
+    const result=files.filter(file=>{
 
         return (
             file.name.toLowerCase().includes(query) ||
             file.type.toLowerCase().includes(query) ||
-            getCategoryName(file.category).toLowerCase().includes(query)
+            categoryName(file.category).toLowerCase().includes(query)
         );
 
     });
@@ -1264,31 +1369,27 @@ function searchFiles(){
     );
 }
 
-/* =========================================
+
+/* =====================================================
    REPORT
-========================================= */
+===================================================== */
 
 function showReport(){
 
-    document.querySelectorAll(".category-btn").forEach(btn => {
-        btn.classList.remove("active");
-    });
+    activateCategory("report");
 
-    const reportButton = document.getElementById("cat-report");
+    const content=document.getElementById("content");
 
-    if(reportButton){
-        reportButton.classList.add("active");
-    }
-
-    document.getElementById("content").innerHTML = `
+    content.innerHTML=`
 
         <div class="report">
 
             <h2>⚠️ Laporan File</h2>
 
             <p>
-                Menemukan link mati, file bermasalah, atau informasi
-                yang salah? Kamu bisa mengirim laporan ke admin EDO Web.
+                Menemukan link mati, file bermasalah,
+                atau informasi yang salah?
+                Silakan laporkan ke admin EDO Web.
             </p>
 
             <a
@@ -1305,26 +1406,18 @@ function showReport(){
     `;
 }
 
-/* =========================================
-   ESCAPE HTML
-========================================= */
 
-function escapeHTML(text){
+/* =====================================================
+   START
+===================================================== */
 
-    return String(text)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+document.addEventListener("DOMContentLoaded",function(){
 
-}
-
-/* =========================================
-   START DIRECTLY ON HOME
-========================================= */
-
-document.addEventListener("DOMContentLoaded", function(){
+    /*
+       TIDAK ADA LOBBY.
+       TIDAK ADA LOADING.
+       LANGSUNG HOME.
+    */
 
     showCategory("home");
 
